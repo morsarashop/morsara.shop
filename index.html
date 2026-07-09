@@ -38,8 +38,6 @@
     min-height:100vh;
   }
   .page-wrap{ max-width:1080px; margin:0 auto; padding: 26px 18px 80px; }
-
-  /* header / brand */
   .brandbar{
     display:flex; align-items:center; justify-content:space-between; gap:18px;
     flex-wrap:wrap; margin-bottom:30px; padding-bottom:22px; border-bottom:1px solid var(--border);
@@ -49,7 +47,6 @@
     color:var(--gold); direction:ltr; text-align:left;
   }
   .brand-morse{ font-size:.72rem; letter-spacing:.12em; color:var(--text-soft); direction:ltr; text-align:left; margin-top:2px; }
-
   nav.tabs{ display:flex; gap:6px; background:var(--panel); padding:6px; border-radius:30px; border:1px solid var(--border); flex-wrap:wrap; }
   nav.tabs button{
     border:none; background:transparent; padding:9px 16px; border-radius:22px;
@@ -60,17 +57,13 @@
   nav.tabs button:focus-visible, .btn:focus-visible, .check-opt:focus-visible, .stepper-btn:focus-visible{
     outline:2px solid var(--gold); outline-offset:2px;
   }
-
   .view{ display:none; }
   .view.active{ display:block; }
-
   .panel{
     background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
     padding:26px 28px; margin-bottom:22px;
   }
   .panel h2.panel-title{ font-size:1rem; color:var(--gold); margin:0 0 18px; font-weight:700; }
-
-  /* HOME */
   .hero{ text-align:center; max-width:640px; margin:0 auto 26px; }
   .eyebrow{
     display:inline-block; font-size:.72rem; color:var(--gold); border:1px solid var(--gold-2);
@@ -80,9 +73,6 @@
   h1.hero-title b{ color:var(--gold); }
   .hero p.lead{ font-size:.92rem; color:var(--text-soft); line-height:2; margin-bottom:22px; }
   @media (max-width:420px){ h1.hero-title{ font-size:1.5rem; } }
-
-  /* Hero visual — نمایش گرافیکی مورس با CSS/SVG به‌جای عکس واقعی؛
-     می‌توانید بعداً با <img> از عکس واقعی محصول جایگزینش کنید */
   .hero-visual{
     max-width:520px; margin:0 auto 30px; border-radius:18px; overflow:hidden; position:relative;
     background: linear-gradient(160deg, #171719, #0d0d0e 60%);
@@ -91,8 +81,6 @@
   .hero-visual svg{ display:block; width:100%; height:auto; }
   .hero-cta-row{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:22px; }
   .btn.btn-lg{ padding:15px 32px; font-size:.95rem; }
-
-  /* اعتمادسازی */
   .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
   .trust-item{
     background:var(--panel-2); border:1px solid var(--border); border-radius:10px; padding:16px 14px;
@@ -102,8 +90,6 @@
   .trust-item .ti-icon{ font-size:1.5rem; color:var(--gold); margin-bottom:8px; }
   .trust-item .ti-title{ font-size:.82rem; font-weight:700; color:var(--text); margin-bottom:4px; }
   .trust-item .ti-sub{ font-size:.72rem; color:var(--text-soft); line-height:1.7; }
-
-  /* گالری محصول */
   .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
   .gallery-item{
     aspect-ratio:1/1; border-radius:10px; border:1px solid var(--border); background:var(--panel-2);
@@ -113,12 +99,9 @@
   .gallery-item:hover{ border-color:var(--gold-2); }
   .gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
   .gallery-item .gi-icon{ font-size:1.6rem; color:var(--gold-2); opacity:.7; }
-
-  /* انیمیشن ورود ملایم هنگام اسکرول */
   .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.revealed{ opacity:1; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
-
   .btn{
     display:inline-flex; align-items:center; gap:8px; border:none; cursor:pointer;
     font-family:'Vazirmatn'; font-weight:700; font-size:.86rem; padding:12px 24px;
@@ -128,7 +111,6 @@
   .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(216,181,106,.25); }
   .btn.ghost{ background:transparent; color:var(--text); border:1.5px solid var(--border); }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); }
-
   .encoder-input{
     width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
     padding:13px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:1rem; outline:none; margin-bottom:16px;
@@ -139,14 +121,11 @@
   table.morse-table th{ color:var(--text-soft); font-weight:600; font-size:.75rem; }
   table.morse-table td.code{ direction:ltr; color:var(--gold); font-family: monospace; letter-spacing:2px; font-size:.95rem; }
   .encoder-empty{ color:var(--text-soft); font-size:.82rem; text-align:center; padding:14px 0; }
-
-  /* DESIGNER */
   .designer{ display:grid; grid-template-columns: 1.25fr .85fr; gap:22px; align-items:start; }
   @media (max-width:880px){ .designer{ grid-template-columns:1fr; } }
   .field-group{ margin-bottom:24px; }
   .field-label{ font-weight:700; color:var(--text); font-size:.9rem; margin-bottom:10px; }
   .field-label small{ font-weight:500; color:var(--text-soft); font-size:.72rem; margin-inline-start:6px; }
-
   .toggle-row{
     display:flex; align-items:center; justify-content:space-between; background:var(--panel-2);
     border:1px solid var(--border); border-radius:8px; padding:14px 16px; gap:12px; flex-wrap:wrap;
@@ -160,7 +139,6 @@
   .switch input:checked + .slider{ background: var(--gold-2); }
   .switch input:checked + .slider::before{ transform:translateX(-20px); }
   .switch input:focus-visible + .slider{ outline:2px solid var(--gold); outline-offset:2px; }
-
   .stepper{ display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:4px; flex:none; }
   .stepper-btn{
     width:32px; height:32px; border-radius:6px; border:none; background:var(--panel-2); color:var(--gold);
@@ -170,7 +148,6 @@
   .stepper-btn:hover{ background:var(--gold-2); color:#20160a; }
   .stepper-btn:active{ transform:scale(.94); }
   .stepper-value{ min-width:28px; text-align:center; font-weight:700; font-size:1rem; color:var(--text); }
-
   .check-list{ display:flex; flex-direction:column; gap:8px; }
   .check-opt{
     display:flex; align-items:center; justify-content:space-between; background:var(--panel-2);
@@ -192,13 +169,11 @@
   .check-opt.selected .checkbox::after{
     content:""; position:absolute; left:5px; top:1px; width:5px; height:9px; border:solid #20160a; border-width:0 2px 2px 0; transform:rotate(45deg);
   }
-
   input[type=text].name-field, input[type=tel].name-field{
     width:100%; border:none; border-bottom:2px solid var(--gold-2); background:transparent;
     padding:10px 4px; font-family:'Vazirmatn'; font-size:1.15rem; color:var(--text); outline:none;
   }
   input.name-field::placeholder{ color:#6b675e; }
-
   .name-field-box{
     background: linear-gradient(180deg, rgba(216,181,106,.08), rgba(216,181,106,.02));
     border:1.5px solid var(--gold-2); border-radius:12px; padding:18px 20px;
@@ -213,7 +188,6 @@
     background:var(--gold); padding:2px 9px; border-radius:20px; letter-spacing:.2px;
   }
   .name-field-box .name-field{ font-size:1.3rem; font-weight:600; }
-
   .note-card{ position:sticky; top:20px; background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
   @media (max-width:880px){ .note-card{ position:static; top:auto; } }
   .note-card h3{ margin:0 0 14px; font-size:1.05rem; color:var(--gold); font-weight:700; }
@@ -224,7 +198,6 @@
   .price-total span{ font-size:.78rem; color:var(--text-soft); }
   .note-card .btn{ width:100%; justify-content:center; margin-top:16px; }
   .note-card .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
-
   .order-success{ text-align:center; }
   .order-success .ok-badge{
     width:52px; height:52px; border-radius:50%; background:rgba(63,191,106,.12); border:1.5px solid var(--green);
@@ -238,23 +211,18 @@
   .btn.whatsapp-btn:hover{ box-shadow:0 8px 18px rgba(63,191,106,.28); }
   .order-error{ color:var(--maroon); font-size:.8rem; text-align:center; margin-top:10px; display:none; }
   .field-warning{ color:var(--maroon); font-size:.74rem; margin-top:8px; line-height:1.9; display:none; }
-
   textarea.notes-field{
     width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
     padding:12px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:.9rem; outline:none; resize:vertical; min-height:70px;
   }
   textarea.notes-field:focus{ border-color:var(--gold); }
   textarea.notes-field::placeholder{ color:#6b675e; }
-
-  /* PRICE LIST */
   table.pricelist{ width:100%; border-collapse:collapse; }
   table.pricelist th, table.pricelist td{ padding:13px 14px; text-align:right; font-size:.86rem; border-bottom:1px solid var(--border); }
   table.pricelist thead th{ color:var(--text-soft); font-weight:600; font-size:.75rem; border-bottom:1px solid var(--gold-2); }
   table.pricelist td.price{ font-weight:700; color:var(--gold); white-space:nowrap; }
   table.pricelist td.free{ color:var(--green); font-weight:600; }
   .pricelist-note{ color:var(--text-soft); font-size:.78rem; margin-top:14px; }
-
-  /* STEPS */
   .steps{ position:relative; }
   .step{ display:grid; grid-template-columns:52px 1fr; gap:16px; margin-bottom:24px; position:relative; }
   .step-num{
@@ -263,14 +231,12 @@
   }
   .step-body h4{ margin:6px 0 6px; color:var(--text); font-size:.95rem; }
   .step-body p{ margin:0; color:var(--text-soft); font-size:.85rem; line-height:1.9; }
-
   .about-text p{ color:var(--text-soft); line-height:2.1; font-size:.9rem; }
   .quote{
     font-size:1.05rem; color:var(--gold); border-right:3px solid var(--gold-2);
     padding-right:16px; margin:20px 0; line-height:1.7; font-style:normal;
   }
   footer{ text-align:center; color:var(--text-soft); font-size:.75rem; margin-top:20px; }
-
   @media (max-width:480px){
     .panel{ padding:20px 16px; }
     .name-field-box{ padding:14px 16px; }
@@ -556,12 +522,22 @@
   <footer>MorsAra — کد مورس اسمت، روی مچ دستت</footer>
 </div>
 
-<!-- Firebase SDK — crossorigin="anonymous" باعث می‌شود در صورت بروز خطا، جزئیات
-     کامل آن در کنسول دیده شود، نه پیام مبهم «Script error.» -->
+<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" crossorigin="anonymous"></script>
-<script src="firebase-config.js"></script>
+<!--
+  نکته‌ی مهم: این فایل باید auth و db را جهانی (global) تعریف کند، مثلاً:
+
+    firebase.initializeApp({ apiKey: "...", authDomain: "...", projectId: "...", ... });
+    var auth = firebase.auth();
+    var db = firebase.firestore();
+
+  اگر این فایل موجود نباشد یا لود نشود، دیگر کل سایت غیرفعال نمی‌شود؛
+  فقط بخش «ثبت سفارش در دیتابیس» کار نخواهد کرد (به‌جایش مستقیم به واتساپ
+  می‌رود) و بقیه‌ی سایت (ناوبری، محاسبه قیمت، انکودر و…) طبق معمول کار می‌کند.
+-->
+<script src="firebase-config.js" onerror="console.warn('[MorsAra] firebase-config.js لود نشد — بخش ثبت سفارش در دیتابیس غیرفعال می‌ماند، اما بقیه سایت کار می‌کند.')"></script>
 <script>
 'use strict';
 
@@ -589,6 +565,16 @@ function charToMorse(ch){
   if(PERSIAN_MORSE[ch]) return PERSIAN_MORSE[ch];
   if(LATIN_MORSE[upper]) return LATIN_MORSE[upper];
   return null;
+}
+
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, function (c) {
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+
+function fmt(n){
+  return (n || 0).toLocaleString('fa-IR') + ' تومان';
 }
 
 /* یک پاس روی متن: هم‌زمان تعداد نقطه/خط، رشته‌ی کامل مورس، و حروف پشتیبانی‌نشده را برمی‌گرداند */
@@ -629,15 +615,27 @@ document.addEventListener('DOMContentLoaded', function () {
   var heartCount = 0;
   var isSubmitting = false;
   var currentUser = null;
+  /* اگر firebase-config.js لود نشده باشد یا auth/db را تعریف نکرده باشد،
+     این پرچم false می‌شود و فقط دکمه‌ی «ثبت سفارش» به سمت واتساپ می‌رود —
+     بقیه‌ی سایت (که هیچ ربطی به فایربیس ندارد) کاملاً سالم کار می‌کند. */
+  var firebaseReady = false;
 
-  /* ---- احراز هویت بی‌نام: هر مشتری یک شناسه یکتا می‌گیرد تا طبق
-     قوانین Firestore فقط بتواند سفارش خودش را ثبت کند ---- */
-  auth.onAuthStateChanged(function (user) { currentUser = user; });
-  auth.signInAnonymously().catch(function (err) {
-    console.error('[MorsAra] خطای ورود ناشناس:', err);
-  });
+  try{
+    if(typeof auth !== 'undefined' && typeof db !== 'undefined'){
+      firebaseReady = true;
+      auth.onAuthStateChanged(function (user) { currentUser = user; });
+      auth.signInAnonymously().catch(function (err) {
+        console.error('[MorsAra] خطای ورود ناشناس:', err);
+      });
+    }else{
+      console.warn('[MorsAra] auth/db تعریف نشده‌اند (فایل firebase-config.js را بررسی کنید). ثبت سفارش در دیتابیس غیرفعال است.');
+    }
+  }catch(err){
+    console.error('[MorsAra] خطا هنگام راه‌اندازی فایربیس:', err);
+  }
 
   function ensureAuth(){
+    if(!firebaseReady) return Promise.resolve(null);
     if(currentUser) return Promise.resolve(currentUser);
     return auth.signInAnonymously()
       .then(function (cred) { currentUser = cred.user; return currentUser; })
@@ -859,6 +857,17 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!navigator.onLine){
       errorBox.textContent = 'اتصال اینترنت برقرار نیست. لطفاً اتصال خود را بررسی و دوباره تلاش کنید.';
       errorBox.style.display = 'block';
+      return;
+    }
+
+    if(!firebaseReady){
+      /* دیتابیس در دسترس نیست (فایل تنظیمات فایربیس لود نشده) —
+         به‌جای هنگ کردن، مستقیم کاربر را به مسیر واتساپ می‌فرستیم تا
+         سفارش از دست نرود. */
+      document.getElementById('orderFormView').style.display = 'none';
+      document.getElementById('orderSuccessView').style.display = 'block';
+      var waLinkFallback = document.getElementById('whatsappLink');
+      waLinkFallback.href = 'https://wa.me/989967787665?text=' + encodeURIComponent(buildWhatsAppMessage(s));
       return;
     }
 
