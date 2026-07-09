@@ -323,7 +323,7 @@
           <div class="price-line"><span>نوع بند</span><b id="p-cord">—</b></div>
           <div class="price-line"><span>تبدیل به گردنبند</span><b id="p-necklace">—</b></div>
           <div class="price-total"><span>جمع کل</span><b id="p-total">۰ تومان</b></div>
-          <button class="btn" onclick="alert('سفارش شما ثبت شد! به‌زودی برای هماهنگی تماس می‌گیریم.')">ثبت سفارش</button>
+          <button class="btn" onclick="saveOrder()">ثبت سفارش</button>
         </div>
       </div>
     </div>
@@ -527,5 +527,40 @@ function renderMorseTable(){
   wrap.innerHTML = `<table class="morse-table"><thead><tr><th>حرف</th><th>کد مورس</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 </script>
-</body>
+ <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDFFT1Gs8-2zy13JbuXCuMi4mezTYNam20",
+  authDomain: "morsara-b689a.firebaseapp.com",
+  projectId: "morsara-b689a",
+  storageBucket: "morsara-b689a.firebasestorage.app",
+  messagingSenderId: "111725106683",
+  appId: "1:111725106683:web:73571a868f986a337ba75e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.saveOrder = async function(){
+
+const name = document.getElementById("nameInput").value.trim();
+
+if(!name){
+ alert("لطفاً اسم یا متن سفارش را وارد کنید");
+ return;
+}
+
+await addDoc(collection(db,"orders"),{
+ name:name,
+ price:document.getElementById("p-total").innerText,
+ date:new Date().toLocaleString("fa-IR")
+});
+
+alert("سفارش شما ثبت شد. برای دریافت اطلاعات پرداخت و ارسال رسید، در واتساپ پیام دهید: 09967787665");
+
+};
+</script><
+/body>
 </html>
