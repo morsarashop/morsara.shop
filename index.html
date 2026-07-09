@@ -4,7 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MorsAra | دستبند و گردنبند مورس</title>
+<meta name="description" content="اسم یا متن دلخواهت را به کد مورس تبدیل کن و دستبند یا گردنبند دست‌ساز و شخصی‌سازی‌شده سفارش بده.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="MorsAra | دستبند و گردنبند مورس">
+<meta property="og:description" content="اسم یا متن دلخواهت را به کد مورس تبدیل کن و روی مچ دستت ببند.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -50,6 +57,9 @@
   }
   nav.tabs button:hover{ color:var(--text); }
   nav.tabs button.active{ background:linear-gradient(135deg, var(--gold), var(--gold-2)); color:#20160a; }
+  nav.tabs button:focus-visible, .btn:focus-visible, .check-opt:focus-visible, .stepper-btn:focus-visible{
+    outline:2px solid var(--gold); outline-offset:2px;
+  }
 
   .view{ display:none; }
   .view.active{ display:block; }
@@ -69,6 +79,46 @@
   h1.hero-title{ font-size:1.85rem; line-height:1.6; color:var(--text); margin:0 0 12px; font-weight:700; }
   h1.hero-title b{ color:var(--gold); }
   .hero p.lead{ font-size:.92rem; color:var(--text-soft); line-height:2; margin-bottom:22px; }
+  @media (max-width:420px){ h1.hero-title{ font-size:1.5rem; } }
+
+  /* Hero visual — نمایش گرافیکی مورس با CSS/SVG به‌جای عکس واقعی؛
+     می‌توانید بعداً با <img> از عکس واقعی محصول جایگزینش کنید */
+  .hero-visual{
+    max-width:520px; margin:0 auto 30px; border-radius:18px; overflow:hidden; position:relative;
+    background: linear-gradient(160deg, #171719, #0d0d0e 60%);
+    border:1px solid var(--border); box-shadow:0 20px 50px -20px rgba(0,0,0,.6);
+  }
+  .hero-visual svg{ display:block; width:100%; height:auto; }
+  .hero-cta-row{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:22px; }
+  .btn.btn-lg{ padding:15px 32px; font-size:.95rem; }
+
+  /* اعتمادسازی */
+  .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
+  .trust-item{
+    background:var(--panel-2); border:1px solid var(--border); border-radius:10px; padding:16px 14px;
+    text-align:center; transition:.2s;
+  }
+  .trust-item:hover{ border-color:var(--gold-2); transform:translateY(-2px); }
+  .trust-item .ti-icon{ font-size:1.5rem; color:var(--gold); margin-bottom:8px; }
+  .trust-item .ti-title{ font-size:.82rem; font-weight:700; color:var(--text); margin-bottom:4px; }
+  .trust-item .ti-sub{ font-size:.72rem; color:var(--text-soft); line-height:1.7; }
+
+  /* گالری محصول */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
+  .gallery-item{
+    aspect-ratio:1/1; border-radius:10px; border:1px solid var(--border); background:var(--panel-2);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    color:var(--text-soft); font-size:.72rem; overflow:hidden; position:relative; transition:.2s;
+  }
+  .gallery-item:hover{ border-color:var(--gold-2); }
+  .gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-item .gi-icon{ font-size:1.6rem; color:var(--gold-2); opacity:.7; }
+
+  /* انیمیشن ورود ملایم هنگام اسکرول */
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.revealed{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
   .btn{
     display:inline-flex; align-items:center; gap:8px; border:none; cursor:pointer;
     font-family:'Vazirmatn'; font-weight:700; font-size:.86rem; padding:12px 24px;
@@ -78,7 +128,6 @@
   .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(216,181,106,.25); }
   .btn.ghost{ background:transparent; color:var(--text); border:1.5px solid var(--border); }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); }
-  .cta-row{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:36px; }
 
   .encoder-input{
     width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
@@ -100,16 +149,17 @@
 
   .toggle-row{
     display:flex; align-items:center; justify-content:space-between; background:var(--panel-2);
-    border:1px solid var(--border); border-radius:8px; padding:14px 16px;
+    border:1px solid var(--border); border-radius:8px; padding:14px 16px; gap:12px; flex-wrap:wrap;
   }
   .toggle-row .ttl{ font-size:.88rem; color:var(--text); }
   .toggle-row .sub{ font-size:.74rem; color:var(--text-soft); margin-top:2px; }
   .switch{ position:relative; width:46px; height:26px; flex:none; }
-  .switch input{ opacity:0; width:0; height:0; }
-  .slider{ position:absolute; inset:0; background:#3a3a3f; border-radius:20px; cursor:pointer; transition:.2s;}
+  .switch input{ position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .slider{ position:absolute; inset:0; background:#3a3a3f; border-radius:20px; transition:.2s; pointer-events:none; }
   .slider::before{ content:""; position:absolute; width:20px; height:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
   .switch input:checked + .slider{ background: var(--gold-2); }
   .switch input:checked + .slider::before{ transform:translateX(-20px); }
+  .switch input:focus-visible + .slider{ outline:2px solid var(--gold); outline-offset:2px; }
 
   .stepper{ display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:4px; flex:none; }
   .stepper-btn{
@@ -143,11 +193,11 @@
     content:""; position:absolute; left:5px; top:1px; width:5px; height:9px; border:solid #20160a; border-width:0 2px 2px 0; transform:rotate(45deg);
   }
 
-  input[type=text].name-field{
+  input[type=text].name-field, input[type=tel].name-field{
     width:100%; border:none; border-bottom:2px solid var(--gold-2); background:transparent;
     padding:10px 4px; font-family:'Vazirmatn'; font-size:1.15rem; color:var(--text); outline:none;
   }
-  input[type=text].name-field::placeholder{ color:#6b675e; }
+  input.name-field::placeholder{ color:#6b675e; }
 
   .name-field-box{
     background: linear-gradient(180deg, rgba(216,181,106,.08), rgba(216,181,106,.02));
@@ -165,6 +215,7 @@
   .name-field-box .name-field{ font-size:1.3rem; font-weight:600; }
 
   .note-card{ position:sticky; top:20px; background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+  @media (max-width:880px){ .note-card{ position:static; top:auto; } }
   .note-card h3{ margin:0 0 14px; font-size:1.05rem; color:var(--gold); font-weight:700; }
   .price-line{ display:flex; justify-content:space-between; font-size:.82rem; padding:8px 0; border-bottom:1px dashed var(--border); color:var(--text-soft); }
   .price-line b{ color:var(--text); font-weight:600; }
@@ -172,6 +223,28 @@
   .price-total b{ font-size:1.35rem; color:var(--gold); }
   .price-total span{ font-size:.78rem; color:var(--text-soft); }
   .note-card .btn{ width:100%; justify-content:center; margin-top:16px; }
+  .note-card .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
+
+  .order-success{ text-align:center; }
+  .order-success .ok-badge{
+    width:52px; height:52px; border-radius:50%; background:rgba(63,191,106,.12); border:1.5px solid var(--green);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.5rem; color:var(--green);
+  }
+  .order-success h3{ color:var(--text); }
+  .order-success .success-msg{ color:var(--text-soft); font-size:.86rem; line-height:2; margin-bottom:6px; }
+  .btn.whatsapp-btn{
+    width:100%; justify-content:center; background:linear-gradient(135deg,#3fbf6a,#279050); color:#fff; margin-top:16px;
+  }
+  .btn.whatsapp-btn:hover{ box-shadow:0 8px 18px rgba(63,191,106,.28); }
+  .order-error{ color:var(--maroon); font-size:.8rem; text-align:center; margin-top:10px; display:none; }
+  .field-warning{ color:var(--maroon); font-size:.74rem; margin-top:8px; line-height:1.9; display:none; }
+
+  textarea.notes-field{
+    width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
+    padding:12px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:.9rem; outline:none; resize:vertical; min-height:70px;
+  }
+  textarea.notes-field:focus{ border-color:var(--gold); }
+  textarea.notes-field::placeholder{ color:#6b675e; }
 
   /* PRICE LIST */
   table.pricelist{ width:100%; border-collapse:collapse; }
@@ -197,6 +270,11 @@
     padding-right:16px; margin:20px 0; line-height:1.7; font-style:normal;
   }
   footer{ text-align:center; color:var(--text-soft); font-size:.75rem; margin-top:20px; }
+
+  @media (max-width:480px){
+    .panel{ padding:20px 16px; }
+    .name-field-box{ padding:14px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -207,27 +285,82 @@
       <div class="brand-name">MORSARA</div>
       <div class="brand-morse" id="brandMorse">-- / --- / .-. / ... / .- / .-. / .-</div>
     </div>
-    <nav class="tabs">
-      <button data-view="home" class="active">صفحه اول</button>
-      <button data-view="designer">طراحی محصول</button>
-      <button data-view="pricelist">لیست قیمت</button>
-      <button data-view="steps">مراحل خرید</button>
-      <button data-view="about">درباره ما</button>
+    <nav class="tabs" role="tablist" aria-label="بخش‌های سایت">
+      <button type="button" data-view="home" class="active" role="tab" aria-selected="true">صفحه اول</button>
+      <button type="button" data-view="designer" role="tab" aria-selected="false">طراحی محصول</button>
+      <button type="button" data-view="pricelist" role="tab" aria-selected="false">لیست قیمت</button>
+      <button type="button" data-view="steps" role="tab" aria-selected="false">مراحل خرید</button>
+      <button type="button" data-view="about" role="tab" aria-selected="false">درباره ما</button>
     </nav>
   </div>
 
   <!-- HOME -->
   <section class="view active" id="view-home">
     <div class="hero">
-      <span class="eyebrow">دستبند و گردنبند مورس</span>
-      <h1 class="hero-title">اسمت را به <b>کد مورس</b> تبدیل کن<br>و روی مچ دستت ببندش</h1>
+      <span class="eyebrow">دستبند و گردنبند دست‌ساز مورس</span>
+      <h1 class="hero-title">اسم تو، به یک <b>رمز خاص</b><br>روی دستت تبدیل می‌شود</h1>
       <p class="lead">هر دستبند از روی کد مورسِ اسم یا متن تو ساخته می‌شود؛ نقطه و خط کنار هم، معنایی که فقط خودت می‌دانی.</p>
     </div>
 
-    <div class="panel">
+    <div class="hero-visual" aria-hidden="true">
+      <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نمایش گرافیکی دستبند کد مورس">
+        <defs>
+          <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#f4dd93"/>
+            <stop offset="100%" stop-color="#b6893f"/>
+          </linearGradient>
+        </defs>
+        <ellipse cx="260" cy="150" rx="170" ry="60" fill="none" stroke="#3a3a3f" stroke-width="10"/>
+        <ellipse cx="260" cy="150" rx="170" ry="60" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="4 10"/>
+        <g fill="url(#goldGrad)">
+          <circle cx="120" cy="150" r="9"/>
+          <rect x="148" y="143" width="26" height="14" rx="7"/>
+          <circle cx="196" cy="150" r="9"/>
+          <circle cx="222" cy="150" r="9"/>
+          <rect x="248" y="143" width="26" height="14" rx="7"/>
+          <circle cx="300" cy="150" r="9"/>
+          <rect x="326" y="143" width="26" height="14" rx="7"/>
+          <rect x="366" y="143" width="26" height="14" rx="7"/>
+          <circle cx="410" cy="150" r="9"/>
+        </g>
+        <text x="260" y="60" text-anchor="middle" font-family="Vazirmatn, sans-serif" font-size="15" fill="#a6a29a" letter-spacing="1">طرح اختصاصی با کد مورس اسم شما</text>
+      </svg>
+    </div>
+
+    <div class="hero-cta-row">
+      <button type="button" class="btn btn-lg" id="heroDesignBtn">ساخت دستبند من</button>
+      <button type="button" class="btn ghost btn-lg" id="heroPriceBtn">دیدن قیمت‌ها</button>
+    </div>
+
+    <div class="panel reveal">
+      <h2 class="panel-title">اعتماد شما برای ما مهم است</h2>
+      <div class="trust-grid">
+        <div class="trust-item"><div class="ti-icon">✦</div><div class="ti-title">مهره‌های باکیفیت</div><div class="ti-sub">انتخاب‌شده و بادوام</div></div>
+        <div class="trust-item"><div class="ti-icon">✋</div><div class="ti-title">ساخت دست‌ساز</div><div class="ti-sub">هر سفارش با دقت ساخته می‌شود</div></div>
+        <div class="trust-item"><div class="ti-icon">⏱</div><div class="ti-title">آماده‌سازی سریع</div><div class="ti-sub">معمولاً ۲ تا ۴ روز کاری</div></div>
+        <div class="trust-item"><div class="ti-icon">🚚</div><div class="ti-title">ارسال به سراسر کشور</div><div class="ti-sub">با پست پیشتاز</div></div>
+        <div class="trust-item"><div class="ti-icon">🎁</div><div class="ti-title">بسته‌بندی شیک</div><div class="ti-sub">آماده هدیه دادن</div></div>
+      </div>
+    </div>
+
+    <div class="panel reveal">
       <h2 class="panel-title">کد مورس متن خودت رو ببین</h2>
-      <input type="text" id="encoderInput" class="encoder-input" placeholder="اسم یا متن را بنویس، فارسی یا انگلیسی…" oninput="renderMorseTable()">
-      <div id="morseTableWrap"><div class="encoder-empty">چیزی بنویس تا کد مورسش رو اینجا ببینی</div></div>
+      <label for="encoderInput" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">متن برای تبدیل به مورس</label>
+      <input type="text" id="encoderInput" class="encoder-input" placeholder="اسم یا متن را بنویس، فارسی یا انگلیسی…" maxlength="40" autocomplete="off">
+      <div id="morseTableWrap" aria-live="polite"><div class="encoder-empty">چیزی بنویس تا کد مورسش رو اینجا ببینی</div></div>
+    </div>
+
+    <div class="panel reveal">
+      <h2 class="panel-title">گالری محصولات</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>دستبند مورس</span></div>
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>گردنبند مورس</span></div>
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>مهره قلبی</span></div>
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>رنگ طلایی</span></div>
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>نخ دندلیون</span></div>
+        <div class="gallery-item"><span class="gi-icon">✦</span><span>بسته‌بندی هدیه</span></div>
+      </div>
+      <p class="pricelist-note" style="margin-top:14px;">به‌زودی عکس‌های واقعی محصولات اینجا قرار می‌گیرد.</p>
     </div>
   </section>
 
@@ -244,25 +377,25 @@
                 <div class="sub">هر مهره قلبی ۱۵٬۰۰۰ تومان — تعداد دلخواه را انتخاب کن</div>
               </div>
               <div class="stepper">
-                <button type="button" class="stepper-btn" onclick="changeHeart(-1)" aria-label="کم کردن">−</button>
-                <span class="stepper-value" id="heartCount">0</span>
-                <button type="button" class="stepper-btn" onclick="changeHeart(1)" aria-label="اضافه کردن">+</button>
+                <button type="button" class="stepper-btn" id="heartMinusBtn" aria-label="کم کردن مهره قلبی">−</button>
+                <span class="stepper-value" id="heartCount" aria-live="polite">0</span>
+                <button type="button" class="stepper-btn" id="heartPlusBtn" aria-label="اضافه کردن مهره قلبی">+</button>
               </div>
             </div>
           </div>
 
           <div class="field-group">
             <div class="field-label">رنگ مهره‌ها <small>می‌توانید چند رنگ را با هم انتخاب کنید</small></div>
-            <div class="check-list" id="colorOptions">
-              <div class="check-opt selected" data-price="0" data-key="نقره‌ای">
+            <div class="check-list" id="colorOptions" role="group" aria-label="رنگ مهره‌ها">
+              <div class="check-opt selected" data-price="0" data-key="نقره‌ای" role="checkbox" aria-checked="true" tabindex="0">
                 <div class="left"><div class="swatch c-silver"></div><span>نقره‌ای</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag">رایگان</span><div class="checkbox"></div></div>
               </div>
-              <div class="check-opt" data-price="5000" data-key="مشکی">
+              <div class="check-opt" data-price="5000" data-key="مشکی" role="checkbox" aria-checked="false" tabindex="0">
                 <div class="left"><div class="swatch c-black"></div><span>مشکی</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag paid">+ ۵٬۰۰۰ تومان</span><div class="checkbox"></div></div>
               </div>
-              <div class="check-opt" data-price="10000" data-key="طلایی">
+              <div class="check-opt" data-price="10000" data-key="طلایی" role="checkbox" aria-checked="false" tabindex="0">
                 <div class="left"><div class="swatch c-gold"></div><span>طلایی</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag paid">+ ۱۰٬۰۰۰ تومان</span><div class="checkbox"></div></div>
               </div>
@@ -271,16 +404,16 @@
 
           <div class="field-group">
             <div class="field-label">نوع بند</div>
-            <div class="check-list" id="cordOptions" data-mode="single">
-              <div class="check-opt selected" data-price="0" data-key="بند کشی">
+            <div class="check-list" id="cordOptions" data-mode="single" role="radiogroup" aria-label="نوع بند">
+              <div class="check-opt selected" data-price="0" data-key="بند کشی" role="radio" aria-checked="true" tabindex="0">
                 <div class="left"><span>بند کشی</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag">رایگان</span><div class="checkbox"></div></div>
               </div>
-              <div class="check-opt" data-price="10000" data-key="نخ دندلیون اورجینال سفید">
+              <div class="check-opt" data-price="10000" data-key="نخ دندلیون اورجینال سفید" role="radio" aria-checked="false" tabindex="0">
                 <div class="left"><div class="swatch" style="background:#f2f2f2; border:1px solid rgba(255,255,255,.3);"></div><span>نخ دندلیون اورجینال سفید</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag paid">+ ۱۰٬۰۰۰ تومان</span><div class="checkbox"></div></div>
               </div>
-              <div class="check-opt" data-price="10000" data-key="نخ دندلیون اورجینال مشکی">
+              <div class="check-opt" data-price="10000" data-key="نخ دندلیون اورجینال مشکی" role="radio" aria-checked="false" tabindex="0">
                 <div class="left"><div class="swatch" style="background:#191919;"></div><span>نخ دندلیون اورجینال مشکی</span></div>
                 <div style="display:flex; align-items:center; gap:10px;"><span class="price-tag paid">+ ۱۰٬۰۰۰ تومان</span><div class="checkbox"></div></div>
               </div>
@@ -294,7 +427,7 @@
                 <div class="sub">همین طرح، روی زنجیر گردنبند</div>
               </div>
               <label class="switch">
-                <input type="checkbox" id="necklaceToggle" onchange="calc()">
+                <input type="checkbox" id="necklaceToggle">
                 <span class="slider"></span>
               </label>
             </div>
@@ -303,27 +436,58 @@
           <div class="field-group">
             <div class="name-field-box">
               <div class="name-field-header">
-                <span class="name-field-icon">✦</span>
+                <span class="name-field-icon" aria-hidden="true">✦</span>
                 <div>
-                  <div class="name-field-title">متن یا اسم روی دستبند <span class="required-badge">ضروری</span></div>
+                  <label class="name-field-title" for="nameInput">متن یا اسم روی دستبند <span class="required-badge">ضروری</span></label>
                   <div class="name-field-sub">این متن به کد مورس تبدیل می‌شود و قیمت نهایی بر اساس آن محاسبه می‌شود</div>
                 </div>
               </div>
-              <input type="text" id="nameInput" class="name-field" placeholder="مثلاً: نگار" maxlength="20" oninput="calc()">
+              <input type="text" id="nameInput" class="name-field" placeholder="مثلاً: نگار" maxlength="20" autocomplete="off">
+              <div class="field-warning" id="morseWarning" aria-live="polite"></div>
             </div>
+          </div>
+
+          <div class="field-group">
+            <div class="name-field-box">
+              <div class="name-field-header">
+                <span class="name-field-icon" aria-hidden="true">✆</span>
+                <div>
+                  <label class="name-field-title" for="phoneInput">شماره تماس <span class="required-badge">ضروری</span></label>
+                  <div class="name-field-sub">برای هماهنگی سفارش و ارسال اطلاعات پرداخت در واتساپ</div>
+                </div>
+              </div>
+              <input type="tel" id="phoneInput" class="name-field" placeholder="مثلاً: 09121234567" maxlength="11" inputmode="numeric" autocomplete="tel">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="notesInput">توضیحات یا آدرس <small>اختیاری</small></label>
+            <textarea id="notesInput" class="notes-field" maxlength="300" placeholder="در صورت نیاز، آدرس یا توضیح تکمیلی سفارش را اینجا بنویس…"></textarea>
           </div>
         </div>
 
         <div class="note-card">
-          <h3>قیمت شما</h3>
-          <div class="price-line"><span>مهره‌های خط (−)</span><b id="p-dash">—</b></div>
-          <div class="price-line"><span>مهره‌های نقطه (·)</span><b id="p-dot">—</b></div>
-          <div class="price-line"><span>مهره قلبی</span><b id="p-heart">—</b></div>
-          <div class="price-line"><span>رنگ مهره‌ها</span><b id="p-color">—</b></div>
-          <div class="price-line"><span>نوع بند</span><b id="p-cord">—</b></div>
-          <div class="price-line"><span>تبدیل به گردنبند</span><b id="p-necklace">—</b></div>
-          <div class="price-total"><span>جمع کل</span><b id="p-total">۰ تومان</b></div>
-          <button class="btn" onclick="saveOrder()">ثبت سفارش</button>
+          <div id="orderFormView">
+            <h3>قیمت شما</h3>
+            <div class="price-line"><span>قیمت پایه دستبند</span><b id="p-base">—</b></div>
+            <div class="price-line"><span>مهره‌های خط (−)</span><b id="p-dash">—</b></div>
+            <div class="price-line"><span>مهره‌های نقطه (·)</span><b id="p-dot">—</b></div>
+            <div class="price-line"><span>مهره قلبی</span><b id="p-heart">—</b></div>
+            <div class="price-line"><span>رنگ مهره‌ها</span><b id="p-color">—</b></div>
+            <div class="price-line"><span>نوع بند</span><b id="p-cord">—</b></div>
+            <div class="price-line"><span>تبدیل به گردنبند</span><b id="p-necklace">—</b></div>
+            <div class="price-total"><span>جمع کل</span><b id="p-total">۰ تومان</b></div>
+            <button type="button" class="btn" id="submitOrderBtn">ثبت سفارش</button>
+            <div class="order-error" id="orderError" role="alert"></div>
+          </div>
+
+          <div id="orderSuccessView" class="order-success" style="display:none;" role="status">
+            <div class="ok-badge" aria-hidden="true">✓</div>
+            <h3>سفارش شما ثبت شد</h3>
+            <p class="success-msg">سفارش شما با موفقیت ثبت شد.</p>
+            <p class="success-msg">برای دریافت اطلاعات پرداخت و ارسال رسید، در واتساپ پیام دهید.</p>
+            <a class="btn whatsapp-btn" id="whatsappLink" href="https://wa.me/989967787665" target="_blank" rel="noopener noreferrer">پیام در واتساپ با جزئیات سفارش</a>
+          </div>
         </div>
       </div>
     </div>
@@ -336,6 +500,7 @@
       <table class="pricelist">
         <thead><tr><th>مورد</th><th>توضیح</th><th>قیمت</th></tr></thead>
         <tbody>
+          <tr><td>قیمت پایه دستبند</td><td>هزینه ثابت ساخت و مواد اولیه</td><td class="price">۲۰٬۰۰۰ تومان</td></tr>
           <tr><td>مهره خط (−)</td><td>به ازای هر خط در کد مورس متن</td><td class="price">۱۰٬۰۰۰ تومان</td></tr>
           <tr><td>مهره نقطه (·)</td><td>به ازای هر نقطه در کد مورس متن</td><td class="price">۱۰٬۰۰۰ تومان</td></tr>
           <tr><td>مهره قلبی</td><td>به ازای هر مهره قلبی (تعداد دلخواه)</td><td class="price">+ ۱۵٬۰۰۰ تومان</td></tr>
@@ -382,8 +547,8 @@
       <h2 class="panel-title">درباره ما</h2>
       <div class="about-text">
         <p>MorsAra از یک ایده‌ی ساده شروع شد: تبدیل اسم و متن‌های دلخواه به کد مورس و ساختن دستبند و گردنبندی که فقط برای خودت معنا دارد.</p>
-        <div class="quote">«هر مهره باید باکیفیت و با دقت ساخته شود»</div>
-        <p>همه‌ی مهره‌ها باکیفیت انتخاب می‌شوند و هر سفارش دست‌ساز و منحصربه‌فرد است.</p>
+        <div class="quote">«هر اسم یک معنا دارد؛ ما آن معنا را با کد مورس به یک زیور شخصی تبدیل می‌کنیم.»</div>
+        <p>همه‌ی مهره‌ها باکیفیت انتخاب می‌شوند و هر سفارش به‌صورت دست‌ساز و منحصربه‌فرد، مخصوص همان اسم یا متنی که تو انتخاب کرده‌ای، ساخته می‌شود.</p>
       </div>
     </div>
   </section>
@@ -391,111 +556,26 @@
   <footer>MorsAra — کد مورس اسمت، روی مچ دستت</footer>
 </div>
 
+<!-- Firebase SDK — crossorigin="anonymous" باعث می‌شود در صورت بروز خطا، جزئیات
+     کامل آن در کنسول دیده شود، نه پیام مبهم «Script error.» -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" crossorigin="anonymous"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" crossorigin="anonymous"></script>
+<script src="firebase-config.js"></script>
 <script>
-function goTo(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+name).classList.add('active');
-  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('active', b.dataset.view===name));
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-document.querySelectorAll('nav.tabs button').forEach(b=>{
-  b.addEventListener('click', ()=>goTo(b.dataset.view));
-});
+'use strict';
 
-/* ---- option groups ---- */
-function setupMultiGroup(id){
-  const group = document.getElementById(id);
-  group.querySelectorAll('.check-opt').forEach(opt=>{
-    opt.addEventListener('click', ()=>{
-      opt.classList.toggle('selected');
-      // keep at least one color selected
-      if(id==='colorOptions' && group.querySelectorAll('.selected').length===0){
-        opt.classList.add('selected');
-      }
-      calc();
-    });
-  });
-}
-function setupSingleGroup(id){
-  const group = document.getElementById(id);
-  group.querySelectorAll('.check-opt').forEach(opt=>{
-    opt.addEventListener('click', ()=>{
-      group.querySelectorAll('.check-opt').forEach(o=>o.classList.remove('selected'));
-      opt.classList.add('selected');
-      calc();
-    });
-  });
-}
-setupMultiGroup('colorOptions');
-setupSingleGroup('cordOptions');
-
-/* ---- pricing ---- */
-const DASH_PRICE = 10000;
-const DOT_PRICE = 10000;
-const HEART_PRICE = 15000;
-const NECKLACE_PRICE = 50000;
-let heartCount = 0;
-
-function changeHeart(delta){
-  heartCount = Math.max(0, heartCount + delta);
-  document.getElementById('heartCount').textContent = heartCount;
-  calc();
-}
-
-function fmt(n){ return n.toLocaleString('fa-IR') + ' تومان'; }
-
-function countMorseSymbols(text){
-  let dash=0, dot=0;
-  for(const ch of text){
-    if(ch===' ') continue;
-    const code = charToMorse(ch);
-    if(!code) continue;
-    for(const sym of code){
-      if(sym==='-') dash++;
-      else if(sym==='.') dot++;
-    }
-  }
-  return {dash, dot};
-}
-
-function calc(){
-  const name = document.getElementById('nameInput').value.trim();
-  const {dash, dot} = countMorseSymbols(name);
-
-  const necklaceOn = document.getElementById('necklaceToggle').checked;
-
-  const colorSelected = [...document.querySelectorAll('#colorOptions .check-opt.selected')];
-  const colorTotal = colorSelected.reduce((s,o)=>s+parseInt(o.dataset.price),0);
-
-  const cordSelected = document.querySelector('#cordOptions .check-opt.selected');
-  const cordPrice = cordSelected ? parseInt(cordSelected.dataset.price) : 0;
-
-  const dashTotal = dash * DASH_PRICE;
-  const dotTotal = dot * DOT_PRICE;
-  const heartPrice = heartCount * HEART_PRICE;
-  const necklace = necklaceOn ? NECKLACE_PRICE : 0;
-
-  const total = dashTotal + dotTotal + heartPrice + colorTotal + cordPrice + necklace;
-
-  document.getElementById('p-dash').textContent = dash ? fmt(dashTotal) + ' (' + dash + ' عدد)' : '—';
-  document.getElementById('p-dot').textContent = dot ? fmt(dotTotal) + ' (' + dot + ' عدد)' : '—';
-  document.getElementById('p-heart').textContent = heartPrice ? '+' + fmt(heartPrice) + ' (' + heartCount + ' عدد)' : 'ندارد';
-  document.getElementById('p-color').textContent = colorTotal ? '+' + fmt(colorTotal) : 'رایگان';
-  document.getElementById('p-cord').textContent = cordPrice ? '+' + fmt(cordPrice) : 'رایگان';
-  document.getElementById('p-necklace').textContent = necklace ? '+' + fmt(necklace) : '—';
-  document.getElementById('p-total').textContent = fmt(total);
-}
-calc();
-
-/* ---- morse code ---- */
-const LATIN_MORSE = {
+/* ==========================================================================
+   کد مورس — جداول و توابع تبدیل (بدون وابستگی به DOM، اول از همه تعریف می‌شود)
+   ========================================================================== */
+var LATIN_MORSE = {
   A:'.-', B:'-...', C:'-.-.', D:'-..', E:'.', F:'..-.', G:'--.', H:'....', I:'..',
   J:'.---', K:'-.-', L:'.-..', M:'--', N:'-.', O:'---', P:'.--.', Q:'--.-', R:'.-.',
   S:'...', T:'-', U:'..-', V:'...-', W:'.--', X:'-..-', Y:'-.--', Z:'--..',
   '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....',
   '6':'-....','7':'--...','8':'---..','9':'----.'
 };
-const PERSIAN_MORSE = {
+var PERSIAN_MORSE = {
   'ا':'.-', 'آ':'.--', 'ب':'-...', 'پ':'.--.', 'ت':'-', 'ث':'-.-.', 'ج':'.---',
   'چ':'..--', 'ح':'....', 'خ':'---', 'د':'-..', 'ذ':'--..', 'ر':'.-.', 'ز':'--.-.',
   'ژ':'.--.-', 'س':'...', 'ش':'----', 'ص':'-..-', 'ض':'...-', 'ط':'..-', 'ظ':'-.--',
@@ -504,63 +584,358 @@ const PERSIAN_MORSE = {
 };
 
 function charToMorse(ch){
-  const upper = ch.toUpperCase();
-  if(ch===' ') return '/';
+  if(ch === ' ') return '/';
+  var upper = ch.toUpperCase();
   if(PERSIAN_MORSE[ch]) return PERSIAN_MORSE[ch];
   if(LATIN_MORSE[upper]) return LATIN_MORSE[upper];
   return null;
 }
 
-function renderMorseTable(){
-  const text = document.getElementById('encoderInput').value;
-  const wrap = document.getElementById('morseTableWrap');
-  if(!text.trim()){
-    wrap.innerHTML = '<div class="encoder-empty">چیزی بنویس تا کد مورسش رو اینجا ببینی</div>';
-    return;
+/* یک پاس روی متن: هم‌زمان تعداد نقطه/خط، رشته‌ی کامل مورس، و حروف پشتیبانی‌نشده را برمی‌گرداند */
+function analyzeMorseText(text){
+  var dash = 0, dot = 0;
+  var parts = [];
+  var unsupported = [];
+  for(var i = 0; i < text.length; i++){
+    var ch = text[i];
+    if(ch === ' '){ parts.push('/'); continue; }
+    var code = charToMorse(ch);
+    if(!code){
+      if(unsupported.indexOf(ch) === -1) unsupported.push(ch);
+      continue;
+    }
+    parts.push(code);
+    for(var j = 0; j < code.length; j++){
+      if(code[j] === '-') dash++;
+      else if(code[j] === '.') dot++;
+    }
   }
-  let rows = '';
-  for(const ch of text){
-    if(ch===' '){ rows += `<tr><td>فاصله</td><td class="code">/</td></tr>`; continue; }
-    const code = charToMorse(ch);
-    if(code) rows += `<tr><td>${ch}</td><td class="code">${code}</td></tr>`;
-  }
-  wrap.innerHTML = `<table class="morse-table"><thead><tr><th>حرف</th><th>کد مورس</th></tr></thead><tbody>${rows}</tbody></table>`;
-}
-</script>
- <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDFFT1Gs8-2zy13JbuXCuMi4mezTYNam20",
-  authDomain: "morsara-b689a.firebaseapp.com",
-  projectId: "morsara-b689a",
-  storageBucket: "morsara-b689a.firebasestorage.app",
-  messagingSenderId: "111725106683",
-  appId: "1:111725106683:web:73571a868f986a337ba75e"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.saveOrder = async function(){
-
-const name = document.getElementById("nameInput").value.trim();
-
-if(!name){
- alert("لطفاً اسم یا متن سفارش را وارد کنید");
- return;
+  return { dash: dash, dot: dot, morseCode: parts.join(' '), unsupported: unsupported };
 }
 
-await addDoc(collection(db,"orders"),{
- name:name,
- price:document.getElementById("p-total").innerText,
- date:new Date().toLocaleString("fa-IR")
+/* ثابت‌های قیمت‌گذاری */
+var BASE_PRICE = 20000;
+var DASH_PRICE = 10000;
+var DOT_PRICE = 10000;
+var HEART_PRICE = 15000;
+var NECKLACE_PRICE = 50000;
+var PHONE_LOCAL_REGEX = (typeof PHONE_REGEX !== 'undefined') ? PHONE_REGEX : /^09\d{9}$/;
+
+/* ==========================================================================
+   منطق برنامه — فقط بعد از آماده شدن کامل DOM اجرا می‌شود
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+
+  var heartCount = 0;
+  var isSubmitting = false;
+  var currentUser = null;
+
+  /* ---- احراز هویت بی‌نام: هر مشتری یک شناسه یکتا می‌گیرد تا طبق
+     قوانین Firestore فقط بتواند سفارش خودش را ثبت کند ---- */
+  auth.onAuthStateChanged(function (user) { currentUser = user; });
+  auth.signInAnonymously().catch(function (err) {
+    console.error('[MorsAra] خطای ورود ناشناس:', err);
+  });
+
+  function ensureAuth(){
+    if(currentUser) return Promise.resolve(currentUser);
+    return auth.signInAnonymously()
+      .then(function (cred) { currentUser = cred.user; return currentUser; })
+      .catch(function (err) {
+        console.error('[MorsAra] خطای احراز هویت:', err);
+        return null;
+      });
+  }
+
+  /* ---- ناوبری تب‌ها ---- */
+  function goTo(name){
+    document.querySelectorAll('.view').forEach(function (v) { v.classList.remove('active'); });
+    var target = document.getElementById('view-' + name);
+    if(target) target.classList.add('active');
+    document.querySelectorAll('nav.tabs button').forEach(function (b) {
+      var active = b.dataset.view === name;
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  document.querySelectorAll('nav.tabs button').forEach(function (b) {
+    b.addEventListener('click', function () { goTo(b.dataset.view); });
+  });
+
+  var heroDesignBtn = document.getElementById('heroDesignBtn');
+  if(heroDesignBtn) heroDesignBtn.addEventListener('click', function () { goTo('designer'); });
+  var heroPriceBtn = document.getElementById('heroPriceBtn');
+  if(heroPriceBtn) heroPriceBtn.addEventListener('click', function () { goTo('pricelist'); });
+
+  /* ---- انیمیشن ملایم ورود بخش‌ها هنگام اسکرول ---- */
+  if('IntersectionObserver' in window){
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if(entry.isIntersecting){
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { revealObserver.observe(el); });
+  }else{
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('revealed'); });
+  }
+
+  /* ---- گروه‌های انتخابی (رنگ‌ها و نوع بند) ---- */
+  function setupMultiGroup(id){
+    var group = document.getElementById(id);
+    if(!group) return;
+    group.querySelectorAll('.check-opt').forEach(function (opt) {
+      function toggle(){
+        opt.classList.toggle('selected');
+        if(group.querySelectorAll('.selected').length === 0){
+          opt.classList.add('selected');
+        }
+        opt.setAttribute('aria-checked', opt.classList.contains('selected') ? 'true' : 'false');
+        calc();
+      }
+      opt.addEventListener('click', toggle);
+      opt.addEventListener('keydown', function (e) {
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      });
+    });
+  }
+  function setupSingleGroup(id){
+    var group = document.getElementById(id);
+    if(!group) return;
+    group.querySelectorAll('.check-opt').forEach(function (opt) {
+      function select(){
+        group.querySelectorAll('.check-opt').forEach(function (o) {
+          o.classList.remove('selected');
+          o.setAttribute('aria-checked', 'false');
+        });
+        opt.classList.add('selected');
+        opt.setAttribute('aria-checked', 'true');
+        calc();
+      }
+      opt.addEventListener('click', select);
+      opt.addEventListener('keydown', function (e) {
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); select(); }
+      });
+    });
+  }
+  setupMultiGroup('colorOptions');
+  setupSingleGroup('cordOptions');
+
+  /* ---- شمارشگر مهره قلبی ---- */
+  function changeHeart(delta){
+    heartCount = Math.max(0, Math.min(20, heartCount + delta));
+    document.getElementById('heartCount').textContent = heartCount;
+    calc();
+  }
+  document.getElementById('heartMinusBtn').addEventListener('click', function () { changeHeart(-1); });
+  document.getElementById('heartPlusBtn').addEventListener('click', function () { changeHeart(1); });
+
+  /* ---- هشدار حروف پشتیبانی‌نشده ---- */
+  function renderMorseWarning(unsupported){
+    var box = document.getElementById('morseWarning');
+    if(unsupported.length){
+      box.textContent = 'حروف زیر پشتیبانی نمی‌شوند و در طرح لحاظ نخواهند شد: ' + unsupported.join('، ');
+      box.style.display = 'block';
+    }else{
+      box.style.display = 'none';
+    }
+  }
+
+  /* ---- محاسبه‌ی وضعیت سفارش ---- */
+  function getOrderState(){
+    var name = document.getElementById('nameInput').value.trim();
+    var phone = document.getElementById('phoneInput').value.trim();
+    var notes = document.getElementById('notesInput').value.trim();
+    var analysis = analyzeMorseText(name);
+
+    var necklaceOn = document.getElementById('necklaceToggle').checked;
+
+    var colorSelected = Array.prototype.slice.call(document.querySelectorAll('#colorOptions .check-opt.selected'));
+    var colors = colorSelected.map(function (o) { return o.dataset.key; });
+    var colorTotal = colorSelected.reduce(function (s, o) { return s + parseInt(o.dataset.price, 10); }, 0);
+
+    var cordSelected = document.querySelector('#cordOptions .check-opt.selected');
+    var cordType = cordSelected ? cordSelected.dataset.key : '';
+    var cordPrice = cordSelected ? parseInt(cordSelected.dataset.price, 10) : 0;
+
+    var dashTotal = analysis.dash * DASH_PRICE;
+    var dotTotal = analysis.dot * DOT_PRICE;
+    var heartPrice = heartCount * HEART_PRICE;
+    var necklace = necklaceOn ? NECKLACE_PRICE : 0;
+
+    var total = BASE_PRICE + dashTotal + dotTotal + heartPrice + colorTotal + cordPrice + necklace;
+
+    return {
+      name: name, phone: phone, notes: notes,
+      morseCode: analysis.morseCode, dash: analysis.dash, dot: analysis.dot,
+      dashTotal: dashTotal, dotTotal: dotTotal, unsupported: analysis.unsupported,
+      heartCount: heartCount, heartPrice: heartPrice, colors: colors, colorTotal: colorTotal,
+      cordType: cordType, cordPrice: cordPrice, productType: necklaceOn ? 'گردنبند' : 'دستبند',
+      necklace: necklace, basePrice: BASE_PRICE, total: total
+    };
+  }
+
+  function calc(){
+    var s = getOrderState();
+    document.getElementById('p-base').textContent = fmt(s.basePrice);
+    document.getElementById('p-dash').textContent = s.dash ? fmt(s.dashTotal) + ' (' + s.dash + ' عدد)' : '—';
+    document.getElementById('p-dot').textContent = s.dot ? fmt(s.dotTotal) + ' (' + s.dot + ' عدد)' : '—';
+    document.getElementById('p-heart').textContent = s.heartPrice ? '+' + fmt(s.heartPrice) + ' (' + s.heartCount + ' عدد)' : 'ندارد';
+    document.getElementById('p-color').textContent = s.colorTotal ? '+' + fmt(s.colorTotal) : 'رایگان';
+    document.getElementById('p-cord').textContent = s.cordPrice ? '+' + fmt(s.cordPrice) : 'رایگان';
+    document.getElementById('p-necklace').textContent = s.necklace ? '+' + fmt(s.necklace) : '—';
+    document.getElementById('p-total').textContent = fmt(s.total);
+    renderMorseWarning(s.unsupported);
+  }
+
+  document.getElementById('nameInput').addEventListener('input', calc);
+  document.getElementById('phoneInput').addEventListener('input', function () {
+    // فقط رقم انگلیسی مجاز است
+    this.value = this.value.replace(/[^0-9]/g, '');
+    calc();
+  });
+  document.getElementById('necklaceToggle').addEventListener('change', calc);
+  calc();
+
+  /* ---- اعتبارسنجی سفارش ---- */
+  function validateOrder(s){
+    if(!s.name) return 'لطفاً ابتدا اسم یا متن مورد نظر را وارد کنید.';
+    if(s.dash + s.dot === 0) return 'متن واردشده قابل تبدیل به کد مورس نیست؛ لطفاً متن دیگری وارد کنید.';
+    if(!s.phone) return 'لطفاً شماره تماس خود را وارد کنید.';
+    if(!PHONE_LOCAL_REGEX.test(s.phone)) return 'شماره تماس معتبر نیست؛ باید مانند 09121234567 باشد.';
+    if(!s.cordType) return 'لطفاً نوع بند را انتخاب کنید.';
+    if(!s.colors.length) return 'لطفاً حداقل یک رنگ برای مهره‌ها انتخاب کنید.';
+    if(s.notes && s.notes.length > 300) return 'توضیحات نباید بیش از ۳۰۰ کاراکتر باشد.';
+    return null;
+  }
+
+  function errorMessageFor(err){
+    var code = err && err.code;
+    if(code === 'permission-denied'){
+      return 'اطلاعات سفارش معتبر نیست. لطفاً مقادیر فرم را بررسی و دوباره تلاش کنید.';
+    }
+    if(code === 'unavailable' || code === 'auth-failed' || code === 'network-request-failed'){
+      return 'اتصال به سرور برقرار نشد. لطفاً اینترنت خود را بررسی و دوباره تلاش کنید.';
+    }
+    return 'مشکلی در ثبت سفارش پیش آمد. لطفاً دوباره تلاش کنید یا در واتساپ پیام دهید.';
+  }
+
+  /* ---- ساخت پیام آماده‌ی واتساپ با جزئیات کامل سفارش ---- */
+  function buildWhatsAppMessage(s){
+    var lines = [
+      'سلام، سفارش جدید از سایت MorsAra:',
+      'اسم سفارش‌دهنده: ' + s.name,
+      'متن مورس: ' + s.name,
+      'کد مورس: ' + s.morseCode,
+      'رنگ انتخابی: ' + s.colors.join('، '),
+      'نوع بند: ' + s.cordType,
+      'نوع محصول: ' + s.productType,
+      'تعداد مهره قلبی: ' + s.heartCount,
+      'قیمت نهایی: ' + fmt(s.total)
+    ];
+    if(s.notes) lines.push('توضیحات: ' + s.notes);
+    lines.push('لطفاً اطلاعات پرداخت و ارسال را برایم بفرستید.');
+    return lines.join('\n');
+  }
+
+  /* ---- ثبت سفارش ---- */
+  function submitOrder(){
+    if(isSubmitting) return;
+
+    var s = getOrderState();
+    var errorBox = document.getElementById('orderError');
+    errorBox.style.display = 'none';
+
+    var validationError = validateOrder(s);
+    if(validationError){
+      errorBox.textContent = validationError;
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    if(!navigator.onLine){
+      errorBox.textContent = 'اتصال اینترنت برقرار نیست. لطفاً اتصال خود را بررسی و دوباره تلاش کنید.';
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    var btn = document.getElementById('submitOrderBtn');
+    isSubmitting = true;
+    btn.disabled = true;
+    var originalLabel = btn.textContent;
+    btn.textContent = 'در حال ثبت سفارش…';
+
+    ensureAuth().then(function (user) {
+      if(!user){
+        var err = new Error('auth-failed');
+        err.code = 'auth-failed';
+        throw err;
+      }
+      return db.collection('orders').add({
+        uid: user.uid,
+        name: s.name,
+        phone: s.phone,
+        notes: s.notes || '',
+        morseCode: s.morseCode,
+        dotCount: s.dot,
+        dashCount: s.dash,
+        heartCount: s.heartCount,
+        colors: s.colors,
+        cordType: s.cordType,
+        productType: s.productType,
+        basePrice: s.basePrice,
+        totalPrice: s.total,
+        status: 'جدید',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+    }).then(function () {
+      document.getElementById('orderFormView').style.display = 'none';
+      document.getElementById('orderSuccessView').style.display = 'block';
+      var waLink = document.getElementById('whatsappLink');
+      waLink.href = 'https://wa.me/989967787665?text=' + encodeURIComponent(buildWhatsAppMessage(s));
+    }).catch(function (err) {
+      console.error('[MorsAra] خطای ثبت سفارش:', err);
+      errorBox.textContent = errorMessageFor(err);
+      errorBox.style.display = 'block';
+      isSubmitting = false;
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+    });
+  }
+  document.getElementById('submitOrderBtn').addEventListener('click', submitOrder);
+
+  /* ---- انکودر صفحه‌ی اول ---- */
+  function renderMorseTable(){
+    var text = document.getElementById('encoderInput').value;
+    var wrap = document.getElementById('morseTableWrap');
+    if(!text.trim()){
+      wrap.innerHTML = '<div class="encoder-empty">چیزی بنویس تا کد مورسش رو اینجا ببینی</div>';
+      return;
+    }
+    var rows = '';
+    var unsupported = [];
+    for(var i = 0; i < text.length; i++){
+      var ch = text[i];
+      if(ch === ' '){ rows += '<tr><td>فاصله</td><td class="code">/</td></tr>'; continue; }
+      var code = charToMorse(ch);
+      if(code){
+        rows += '<tr><td>' + escapeHtml(ch) + '</td><td class="code">' + escapeHtml(code) + '</td></tr>';
+      }else if(unsupported.indexOf(ch) === -1){
+        unsupported.push(ch);
+      }
+    }
+    var html = '<table class="morse-table"><thead><tr><th>حرف</th><th>کد مورس</th></tr></thead><tbody>' + rows + '</tbody></table>';
+    if(unsupported.length){
+      html += '<div class="field-warning" style="display:block; text-align:center; margin-top:12px;">حروف زیر پشتیبانی نمی‌شوند: ' + escapeHtml(unsupported.join('، ')) + '</div>';
+    }
+    wrap.innerHTML = html;
+  }
+  document.getElementById('encoderInput').addEventListener('input', renderMorseTable);
+
 });
-
-alert("سفارش شما ثبت شد. برای دریافت اطلاعات پرداخت و ارسال رسید، در واتساپ پیام دهید: 09967787665");
-
-};
-</script><
-/body>
+</script>
+</body>
 </html>
