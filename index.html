@@ -734,6 +734,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return null;
       });
   }
+  window.ensureAuth = ensureAuth; // در دسترس قرار دادن برای اسکریپت مستقل پنل ادمین
 
   /* ---- ناوبری تب‌ها ---- */
   function goTo(name){
@@ -1054,6 +1055,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   document.getElementById('encoderInput').addEventListener('input', renderMorseTable);
 
+});
+</script>
+
+<script>
+'use strict';
+(function () {
+document.addEventListener('DOMContentLoaded', function () {
   /* ==========================================================================
      پنل ادمین (افزوده‌شده) — ورود با رمز، نمایش لیست سفارش‌ها و جزئیات هرکدام.
      نکته: خود سفارش‌ها همیشه در Firestore ذخیره می‌مانند؛ این بخش فقط یک
@@ -1164,7 +1172,10 @@ document.addEventListener('DOMContentLoaded', function () {
   function loadAdminOrders(){
     adminOrdersList.innerHTML = '<div class="admin-orders-empty">در حال بارگذاری سفارش‌ها…</div>';
     if(adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
-    ensureAuth().then(function () {
+    var authReady = (typeof window.ensureAuth === 'function')
+      ? window.ensureAuth()
+      : (typeof auth !== 'undefined' ? auth.signInAnonymously() : Promise.resolve(null));
+    authReady.then(function () {
       adminOrdersUnsub = db.collection('orders').onSnapshot(function (snapshot) {
         adminOrdersCache = {};
         snapshot.forEach(function (doc) { adminOrdersCache[doc.id] = doc.data(); });
@@ -1201,8 +1212,8 @@ document.addEventListener('DOMContentLoaded', function () {
     adminOrderDetail.innerHTML = html;
     openOverlay(adminDetailOverlay);
   }
-
 });
+})();
 </script>
 </body>
 </html>
