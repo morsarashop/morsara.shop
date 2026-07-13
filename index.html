@@ -38,6 +38,8 @@
     min-height:100vh;
   }
   .page-wrap{ max-width:1080px; margin:0 auto; padding: 26px 18px 80px; }
+
+  /* header / brand */
   .brandbar{
     display:flex; align-items:center; justify-content:space-between; gap:18px;
     flex-wrap:wrap; margin-bottom:30px; padding-bottom:22px; border-bottom:1px solid var(--border);
@@ -47,6 +49,7 @@
     color:var(--gold); direction:ltr; text-align:left;
   }
   .brand-morse{ font-size:.72rem; letter-spacing:.12em; color:var(--text-soft); direction:ltr; text-align:left; margin-top:2px; }
+
   nav.tabs{ display:flex; gap:6px; background:var(--panel); padding:6px; border-radius:30px; border:1px solid var(--border); flex-wrap:wrap; }
   nav.tabs button{
     border:none; background:transparent; padding:9px 16px; border-radius:22px;
@@ -57,13 +60,17 @@
   nav.tabs button:focus-visible, .btn:focus-visible, .check-opt:focus-visible, .stepper-btn:focus-visible{
     outline:2px solid var(--gold); outline-offset:2px;
   }
+
   .view{ display:none; }
   .view.active{ display:block; }
+
   .panel{
     background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
     padding:26px 28px; margin-bottom:22px;
   }
   .panel h2.panel-title{ font-size:1rem; color:var(--gold); margin:0 0 18px; font-weight:700; }
+
+  /* HOME */
   .hero{ text-align:center; max-width:640px; margin:0 auto 26px; }
   .eyebrow{
     display:inline-block; font-size:.72rem; color:var(--gold); border:1px solid var(--gold-2);
@@ -73,6 +80,9 @@
   h1.hero-title b{ color:var(--gold); }
   .hero p.lead{ font-size:.92rem; color:var(--text-soft); line-height:2; margin-bottom:22px; }
   @media (max-width:420px){ h1.hero-title{ font-size:1.5rem; } }
+
+  /* Hero visual — نمایش گرافیکی مورس با CSS/SVG به‌جای عکس واقعی؛
+     می‌توانید بعداً با <img> از عکس واقعی محصول جایگزینش کنید */
   .hero-visual{
     max-width:520px; margin:0 auto 30px; border-radius:18px; overflow:hidden; position:relative;
     background: linear-gradient(160deg, #171719, #0d0d0e 60%);
@@ -81,6 +91,8 @@
   .hero-visual svg{ display:block; width:100%; height:auto; }
   .hero-cta-row{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:22px; }
   .btn.btn-lg{ padding:15px 32px; font-size:.95rem; }
+
+  /* اعتمادسازی */
   .trust-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
   .trust-item{
     background:var(--panel-2); border:1px solid var(--border); border-radius:10px; padding:16px 14px;
@@ -90,6 +102,8 @@
   .trust-item .ti-icon{ font-size:1.5rem; color:var(--gold); margin-bottom:8px; }
   .trust-item .ti-title{ font-size:.82rem; font-weight:700; color:var(--text); margin-bottom:4px; }
   .trust-item .ti-sub{ font-size:.72rem; color:var(--text-soft); line-height:1.7; }
+
+  /* گالری محصول */
   .gallery-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px; }
   .gallery-item{
     aspect-ratio:1/1; border-radius:10px; border:1px solid var(--border); background:var(--panel-2);
@@ -99,9 +113,12 @@
   .gallery-item:hover{ border-color:var(--gold-2); }
   .gallery-item img{ width:100%; height:100%; object-fit:cover; display:block; }
   .gallery-item .gi-icon{ font-size:1.6rem; color:var(--gold-2); opacity:.7; }
+
+  /* انیمیشن ورود ملایم هنگام اسکرول */
   .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
   .reveal.revealed{ opacity:1; transform:translateY(0); }
   @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
+
   .btn{
     display:inline-flex; align-items:center; gap:8px; border:none; cursor:pointer;
     font-family:'Vazirmatn'; font-weight:700; font-size:.86rem; padding:12px 24px;
@@ -111,6 +128,7 @@
   .btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(216,181,106,.25); }
   .btn.ghost{ background:transparent; color:var(--text); border:1.5px solid var(--border); }
   .btn.ghost:hover{ border-color:var(--gold); color:var(--gold); }
+
   .encoder-input{
     width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
     padding:13px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:1rem; outline:none; margin-bottom:16px;
@@ -121,11 +139,14 @@
   table.morse-table th{ color:var(--text-soft); font-weight:600; font-size:.75rem; }
   table.morse-table td.code{ direction:ltr; color:var(--gold); font-family: monospace; letter-spacing:2px; font-size:.95rem; }
   .encoder-empty{ color:var(--text-soft); font-size:.82rem; text-align:center; padding:14px 0; }
+
+  /* DESIGNER */
   .designer{ display:grid; grid-template-columns: 1.25fr .85fr; gap:22px; align-items:start; }
   @media (max-width:880px){ .designer{ grid-template-columns:1fr; } }
   .field-group{ margin-bottom:24px; }
   .field-label{ font-weight:700; color:var(--text); font-size:.9rem; margin-bottom:10px; }
   .field-label small{ font-weight:500; color:var(--text-soft); font-size:.72rem; margin-inline-start:6px; }
+
   .toggle-row{
     display:flex; align-items:center; justify-content:space-between; background:var(--panel-2);
     border:1px solid var(--border); border-radius:8px; padding:14px 16px; gap:12px; flex-wrap:wrap;
@@ -139,6 +160,7 @@
   .switch input:checked + .slider{ background: var(--gold-2); }
   .switch input:checked + .slider::before{ transform:translateX(-20px); }
   .switch input:focus-visible + .slider{ outline:2px solid var(--gold); outline-offset:2px; }
+
   .stepper{ display:flex; align-items:center; gap:4px; background:var(--panel); border:1px solid var(--border); border-radius:8px; padding:4px; flex:none; }
   .stepper-btn{
     width:32px; height:32px; border-radius:6px; border:none; background:var(--panel-2); color:var(--gold);
@@ -148,6 +170,7 @@
   .stepper-btn:hover{ background:var(--gold-2); color:#20160a; }
   .stepper-btn:active{ transform:scale(.94); }
   .stepper-value{ min-width:28px; text-align:center; font-weight:700; font-size:1rem; color:var(--text); }
+
   .check-list{ display:flex; flex-direction:column; gap:8px; }
   .check-opt{
     display:flex; align-items:center; justify-content:space-between; background:var(--panel-2);
@@ -169,11 +192,13 @@
   .check-opt.selected .checkbox::after{
     content:""; position:absolute; left:5px; top:1px; width:5px; height:9px; border:solid #20160a; border-width:0 2px 2px 0; transform:rotate(45deg);
   }
+
   input[type=text].name-field, input[type=tel].name-field{
     width:100%; border:none; border-bottom:2px solid var(--gold-2); background:transparent;
     padding:10px 4px; font-family:'Vazirmatn'; font-size:1.15rem; color:var(--text); outline:none;
   }
   input.name-field::placeholder{ color:#6b675e; }
+
   .name-field-box{
     background: linear-gradient(180deg, rgba(216,181,106,.08), rgba(216,181,106,.02));
     border:1.5px solid var(--gold-2); border-radius:12px; padding:18px 20px;
@@ -188,6 +213,7 @@
     background:var(--gold); padding:2px 9px; border-radius:20px; letter-spacing:.2px;
   }
   .name-field-box .name-field{ font-size:1.3rem; font-weight:600; }
+
   .note-card{ position:sticky; top:20px; background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
   @media (max-width:880px){ .note-card{ position:static; top:auto; } }
   .note-card h3{ margin:0 0 14px; font-size:1.05rem; color:var(--gold); font-weight:700; }
@@ -198,6 +224,7 @@
   .price-total span{ font-size:.78rem; color:var(--text-soft); }
   .note-card .btn{ width:100%; justify-content:center; margin-top:16px; }
   .note-card .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; box-shadow:none; }
+
   .order-success{ text-align:center; }
   .order-success .ok-badge{
     width:52px; height:52px; border-radius:50%; background:rgba(63,191,106,.12); border:1.5px solid var(--green);
@@ -211,18 +238,23 @@
   .btn.whatsapp-btn:hover{ box-shadow:0 8px 18px rgba(63,191,106,.28); }
   .order-error{ color:var(--maroon); font-size:.8rem; text-align:center; margin-top:10px; display:none; }
   .field-warning{ color:var(--maroon); font-size:.74rem; margin-top:8px; line-height:1.9; display:none; }
+
   textarea.notes-field{
     width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
     padding:12px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:.9rem; outline:none; resize:vertical; min-height:70px;
   }
   textarea.notes-field:focus{ border-color:var(--gold); }
   textarea.notes-field::placeholder{ color:#6b675e; }
+
+  /* PRICE LIST */
   table.pricelist{ width:100%; border-collapse:collapse; }
   table.pricelist th, table.pricelist td{ padding:13px 14px; text-align:right; font-size:.86rem; border-bottom:1px solid var(--border); }
   table.pricelist thead th{ color:var(--text-soft); font-weight:600; font-size:.75rem; border-bottom:1px solid var(--gold-2); }
   table.pricelist td.price{ font-weight:700; color:var(--gold); white-space:nowrap; }
   table.pricelist td.free{ color:var(--green); font-weight:600; }
   .pricelist-note{ color:var(--text-soft); font-size:.78rem; margin-top:14px; }
+
+  /* STEPS */
   .steps{ position:relative; }
   .step{ display:grid; grid-template-columns:52px 1fr; gap:16px; margin-bottom:24px; position:relative; }
   .step-num{
@@ -231,16 +263,66 @@
   }
   .step-body h4{ margin:6px 0 6px; color:var(--text); font-size:.95rem; }
   .step-body p{ margin:0; color:var(--text-soft); font-size:.85rem; line-height:1.9; }
+
   .about-text p{ color:var(--text-soft); line-height:2.1; font-size:.9rem; }
   .quote{
     font-size:1.05rem; color:var(--gold); border-right:3px solid var(--gold-2);
     padding-right:16px; margin:20px 0; line-height:1.7; font-style:normal;
   }
   footer{ text-align:center; color:var(--text-soft); font-size:.75rem; margin-top:20px; }
+
   @media (max-width:480px){
     .panel{ padding:20px 16px; }
     .name-field-box{ padding:14px 16px; }
   }
+
+  /* ---- پنل ادمین (افزوده‌شده) ---- */
+  .admin-trigger-wrap{ text-align:center; margin-top:26px; }
+  .admin-trigger{
+    background:none; border:none; color:var(--text-soft); font-family:'Vazirmatn'; font-size:.68rem;
+    opacity:.45; cursor:pointer; padding:4px 8px; letter-spacing:.2px; transition:.2s;
+  }
+  .admin-trigger:hover{ opacity:.85; color:var(--gold); }
+
+  .admin-modal-overlay{
+    display:none; position:fixed; inset:0; background:rgba(6,6,7,.72); z-index:1000;
+    align-items:center; justify-content:center; padding:20px; backdrop-filter: blur(2px);
+  }
+  .admin-modal-overlay.open{ display:flex; }
+  .admin-modal-box{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    width:100%; max-width:420px; max-height:88vh; overflow-y:auto; padding:26px 24px; position:relative;
+  }
+  .admin-modal-box.wide{ max-width:640px; }
+  .admin-modal-close{
+    position:absolute; top:14px; left:14px; background:none; border:none; color:var(--text-soft);
+    font-size:1.2rem; cursor:pointer; line-height:1; padding:4px;
+  }
+  .admin-modal-close:hover{ color:var(--gold); }
+  .admin-modal-box h3{ margin:0 0 18px; color:var(--gold); font-size:1.05rem; font-weight:700; }
+
+  .admin-login-field{
+    width:100%; border:1px solid var(--border); background:var(--panel-2); color:var(--text);
+    padding:12px 14px; border-radius:8px; font-family:'Vazirmatn'; font-size:.95rem; outline:none; margin-bottom:14px;
+  }
+  .admin-login-field:focus{ border-color:var(--gold); }
+  .admin-login-error{ color:var(--maroon); font-size:.78rem; margin-bottom:10px; display:none; }
+
+  .admin-orders-empty{ color:var(--text-soft); font-size:.85rem; text-align:center; padding:20px 0; }
+  .admin-order-row{
+    display:flex; flex-direction:column; gap:4px; background:var(--panel-2); border:1px solid var(--border);
+    border-radius:8px; padding:13px 14px; margin-bottom:10px; cursor:pointer; transition:.15s;
+  }
+  .admin-order-row:hover{ border-color:var(--gold-2); }
+  .admin-order-row .aor-top{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .admin-order-row .aor-name{ font-weight:700; color:var(--text); font-size:.9rem; }
+  .admin-order-row .aor-status{ font-size:.68rem; color:var(--gold); border:1px solid var(--gold-2); border-radius:12px; padding:2px 9px; flex:none; }
+  .admin-order-row .aor-meta{ display:flex; justify-content:space-between; gap:10px; font-size:.74rem; color:var(--text-soft); direction:ltr; text-align:right; }
+
+  .admin-detail-line{ display:flex; justify-content:space-between; gap:14px; font-size:.82rem; padding:8px 0; border-bottom:1px dashed var(--border); color:var(--text-soft); }
+  .admin-detail-line b{ color:var(--text); font-weight:600; text-align:left; direction:ltr; }
+  .admin-detail-line.wrap{ flex-direction:column; gap:6px; }
+  .admin-detail-line.wrap b{ text-align:right; direction:rtl; }
 </style>
 </head>
 <body>
@@ -516,28 +598,50 @@
         <div class="quote">«هر اسم یک معنا دارد؛ ما آن معنا را با کد مورس به یک زیور شخصی تبدیل می‌کنیم.»</div>
         <p>همه‌ی مهره‌ها باکیفیت انتخاب می‌شوند و هر سفارش به‌صورت دست‌ساز و منحصربه‌فرد، مخصوص همان اسم یا متنی که تو انتخاب کرده‌ای، ساخته می‌شود.</p>
       </div>
+      <div class="admin-trigger-wrap">
+        <button type="button" class="admin-trigger" id="adminTriggerBtn">پنل ادمین</button>
+      </div>
     </div>
   </section>
 
   <footer>MorsAra — کد مورس اسمت، روی مچ دستت</footer>
+
+  <!-- ADMIN: ورود -->
+  <div class="admin-modal-overlay" id="adminLoginOverlay" role="dialog" aria-modal="true" aria-label="ورود به پنل ادمین">
+    <div class="admin-modal-box">
+      <button type="button" class="admin-modal-close" id="adminLoginCloseBtn" aria-label="بستن">✕</button>
+      <h3>ورود به پنل ادمین</h3>
+      <input type="password" id="adminPasswordInput" class="admin-login-field" placeholder="رمز عبور" autocomplete="off">
+      <div class="admin-login-error" id="adminLoginError"></div>
+      <button type="button" class="btn" style="width:100%; justify-content:center;" id="adminLoginSubmitBtn">ورود</button>
+    </div>
+  </div>
+
+  <!-- ADMIN: لیست سفارش‌ها -->
+  <div class="admin-modal-overlay" id="adminPanelOverlay" role="dialog" aria-modal="true" aria-label="پنل ادمین">
+    <div class="admin-modal-box wide">
+      <button type="button" class="admin-modal-close" id="adminPanelCloseBtn" aria-label="بستن">✕</button>
+      <h3>سفارش‌ها</h3>
+      <div id="adminOrdersList"><div class="admin-orders-empty">در حال بارگذاری سفارش‌ها…</div></div>
+    </div>
+  </div>
+
+  <!-- ADMIN: جزئیات سفارش -->
+  <div class="admin-modal-overlay" id="adminDetailOverlay" role="dialog" aria-modal="true" aria-label="جزئیات سفارش">
+    <div class="admin-modal-box">
+      <button type="button" class="admin-modal-close" id="adminDetailCloseBtn" aria-label="بستن">✕</button>
+      <h3>جزئیات سفارش</h3>
+      <div id="adminOrderDetail"></div>
+    </div>
+  </div>
 </div>
 
-<!-- Firebase SDK -->
+<!-- Firebase SDK — crossorigin="anonymous" باعث می‌شود در صورت بروز خطا، جزئیات
+     کامل آن در کنسول دیده شود، نه پیام مبهم «Script error.» -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js" crossorigin="anonymous"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js" crossorigin="anonymous"></script>
-<!--
-  نکته‌ی مهم: این فایل باید auth و db را جهانی (global) تعریف کند، مثلاً:
-
-    firebase.initializeApp({ apiKey: "...", authDomain: "...", projectId: "...", ... });
-    var auth = firebase.auth();
-    var db = firebase.firestore();
-
-  اگر این فایل موجود نباشد یا لود نشود، دیگر کل سایت غیرفعال نمی‌شود؛
-  فقط بخش «ثبت سفارش در دیتابیس» کار نخواهد کرد (به‌جایش مستقیم به واتساپ
-  می‌رود) و بقیه‌ی سایت (ناوبری، محاسبه قیمت، انکودر و…) طبق معمول کار می‌کند.
--->
-<script src="firebase-config.js" onerror="console.warn('[MorsAra] firebase-config.js لود نشد — بخش ثبت سفارش در دیتابیس غیرفعال می‌ماند، اما بقیه سایت کار می‌کند.')"></script>
+<script src="firebase-config.js"></script>
 <script>
 'use strict';
 
@@ -565,16 +669,6 @@ function charToMorse(ch){
   if(PERSIAN_MORSE[ch]) return PERSIAN_MORSE[ch];
   if(LATIN_MORSE[upper]) return LATIN_MORSE[upper];
   return null;
-}
-
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, function (c) {
-    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
-  });
-}
-
-function fmt(n){
-  return (n || 0).toLocaleString('fa-IR') + ' تومان';
 }
 
 /* یک پاس روی متن: هم‌زمان تعداد نقطه/خط، رشته‌ی کامل مورس، و حروف پشتیبانی‌نشده را برمی‌گرداند */
@@ -607,6 +701,14 @@ var HEART_PRICE = 15000;
 var NECKLACE_PRICE = 50000;
 var PHONE_LOCAL_REGEX = (typeof PHONE_REGEX !== 'undefined') ? PHONE_REGEX : /^09\d{9}$/;
 
+/* ---- تنظیمات ربات تلگرام (افزوده‌شده) ----
+   TELEGRAM_CHAT_ID را با شناسه چت/کانال/گروهی که می‌خواهید سفارش‌ها آنجا
+   ارسال شوند پر کنید. برای گرفتن آن: به ربات‌تان پیام بدهید، سپس آدرس زیر
+   را در مرورگر باز کنید و مقدار chat.id را از پاسخ JSON بردارید:
+   https://api.telegram.org/bot<TOKEN>/getUpdates */
+var TELEGRAM_BOT_TOKEN = '8605964561:AAFZozOG_J2DqCFSp_nlk82K-GKEJu4yv8o';
+var TELEGRAM_CHAT_ID = ''; // اینجا را با chat id خودتان پر کنید
+
 /* ==========================================================================
    منطق برنامه — فقط بعد از آماده شدن کامل DOM اجرا می‌شود
    ========================================================================== */
@@ -615,27 +717,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var heartCount = 0;
   var isSubmitting = false;
   var currentUser = null;
-  /* اگر firebase-config.js لود نشده باشد یا auth/db را تعریف نکرده باشد،
-     این پرچم false می‌شود و فقط دکمه‌ی «ثبت سفارش» به سمت واتساپ می‌رود —
-     بقیه‌ی سایت (که هیچ ربطی به فایربیس ندارد) کاملاً سالم کار می‌کند. */
-  var firebaseReady = false;
 
-  try{
-    if(typeof auth !== 'undefined' && typeof db !== 'undefined'){
-      firebaseReady = true;
-      auth.onAuthStateChanged(function (user) { currentUser = user; });
-      auth.signInAnonymously().catch(function (err) {
-        console.error('[MorsAra] خطای ورود ناشناس:', err);
-      });
-    }else{
-      console.warn('[MorsAra] auth/db تعریف نشده‌اند (فایل firebase-config.js را بررسی کنید). ثبت سفارش در دیتابیس غیرفعال است.');
-    }
-  }catch(err){
-    console.error('[MorsAra] خطا هنگام راه‌اندازی فایربیس:', err);
-  }
+  /* ---- احراز هویت بی‌نام: هر مشتری یک شناسه یکتا می‌گیرد تا طبق
+     قوانین Firestore فقط بتواند سفارش خودش را ثبت کند ---- */
+  auth.onAuthStateChanged(function (user) { currentUser = user; });
+  auth.signInAnonymously().catch(function (err) {
+    console.error('[MorsAra] خطای ورود ناشناس:', err);
+  });
 
   function ensureAuth(){
-    if(!firebaseReady) return Promise.resolve(null);
     if(currentUser) return Promise.resolve(currentUser);
     return auth.signInAnonymously()
       .then(function (cred) { currentUser = cred.user; return currentUser; })
@@ -839,6 +929,36 @@ document.addEventListener('DOMContentLoaded', function () {
     return lines.join('\n');
   }
 
+  /* ---- ارسال سفارش به ربات تلگرام (افزوده‌شده) ---- */
+  function buildTelegramMessage(s){
+    var lines = [
+      '🛎 سفارش جدید — MorsAra',
+      'نام: ' + s.name,
+      'تماس: ' + s.phone,
+      'نوع محصول: ' + s.productType,
+      'کد مورس: ' + s.morseCode,
+      'رنگ: ' + s.colors.join('، '),
+      'نوع بند: ' + s.cordType,
+      'مهره قلبی: ' + s.heartCount,
+      'قیمت نهایی: ' + fmt(s.total)
+    ];
+    if(s.notes) lines.push('توضیحات: ' + s.notes);
+    return lines.join('\n');
+  }
+  function sendTelegramNotification(s){
+    if(!TELEGRAM_CHAT_ID){
+      console.warn('[MorsAra] TELEGRAM_CHAT_ID تنظیم نشده؛ پیام تلگرام ارسال نشد.');
+      return;
+    }
+    fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: buildTelegramMessage(s) })
+    }).catch(function (err) {
+      console.error('[MorsAra] خطای ارسال پیام تلگرام:', err);
+    });
+  }
+
   /* ---- ثبت سفارش ---- */
   function submitOrder(){
     if(isSubmitting) return;
@@ -857,17 +977,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if(!navigator.onLine){
       errorBox.textContent = 'اتصال اینترنت برقرار نیست. لطفاً اتصال خود را بررسی و دوباره تلاش کنید.';
       errorBox.style.display = 'block';
-      return;
-    }
-
-    if(!firebaseReady){
-      /* دیتابیس در دسترس نیست (فایل تنظیمات فایربیس لود نشده) —
-         به‌جای هنگ کردن، مستقیم کاربر را به مسیر واتساپ می‌فرستیم تا
-         سفارش از دست نرود. */
-      document.getElementById('orderFormView').style.display = 'none';
-      document.getElementById('orderSuccessView').style.display = 'block';
-      var waLinkFallback = document.getElementById('whatsappLink');
-      waLinkFallback.href = 'https://wa.me/989967787665?text=' + encodeURIComponent(buildWhatsAppMessage(s));
       return;
     }
 
@@ -905,6 +1014,7 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('orderSuccessView').style.display = 'block';
       var waLink = document.getElementById('whatsappLink');
       waLink.href = 'https://wa.me/989967787665?text=' + encodeURIComponent(buildWhatsAppMessage(s));
+      sendTelegramNotification(s);
     }).catch(function (err) {
       console.error('[MorsAra] خطای ثبت سفارش:', err);
       errorBox.textContent = errorMessageFor(err);
@@ -943,6 +1053,154 @@ document.addEventListener('DOMContentLoaded', function () {
     wrap.innerHTML = html;
   }
   document.getElementById('encoderInput').addEventListener('input', renderMorseTable);
+
+  /* ==========================================================================
+     پنل ادمین (افزوده‌شده) — ورود با رمز، نمایش لیست سفارش‌ها و جزئیات هرکدام.
+     نکته: خود سفارش‌ها همیشه در Firestore ذخیره می‌مانند؛ این بخش فقط یک
+     نمای مدیریتی روی همان داده‌هاست.
+     ========================================================================== */
+  var ADMIN_PASSWORD = 'Arad13892121';
+  var adminOrdersUnsub = null;
+  var adminOrdersCache = {};
+
+  var adminTriggerBtn = document.getElementById('adminTriggerBtn');
+  var adminLoginOverlay = document.getElementById('adminLoginOverlay');
+  var adminPanelOverlay = document.getElementById('adminPanelOverlay');
+  var adminDetailOverlay = document.getElementById('adminDetailOverlay');
+  var adminPasswordInput = document.getElementById('adminPasswordInput');
+  var adminLoginError = document.getElementById('adminLoginError');
+  var adminOrdersList = document.getElementById('adminOrdersList');
+  var adminOrderDetail = document.getElementById('adminOrderDetail');
+
+  function openOverlay(el){ el.classList.add('open'); }
+  function closeOverlay(el){ el.classList.remove('open'); }
+
+  adminTriggerBtn.addEventListener('click', function () {
+    adminPasswordInput.value = '';
+    adminLoginError.style.display = 'none';
+    openOverlay(adminLoginOverlay);
+    setTimeout(function () { adminPasswordInput.focus(); }, 50);
+  });
+
+  document.getElementById('adminLoginCloseBtn').addEventListener('click', function () { closeOverlay(adminLoginOverlay); });
+  document.getElementById('adminPanelCloseBtn').addEventListener('click', function () {
+    closeOverlay(adminPanelOverlay);
+    if(adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
+  });
+  document.getElementById('adminDetailCloseBtn').addEventListener('click', function () { closeOverlay(adminDetailOverlay); });
+
+  [adminLoginOverlay, adminPanelOverlay, adminDetailOverlay].forEach(function (overlay) {
+    overlay.addEventListener('click', function (e) {
+      if(e.target === overlay){
+        if(overlay === adminPanelOverlay && adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
+        closeOverlay(overlay);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if(e.key !== 'Escape') return;
+    if(adminDetailOverlay.classList.contains('open')){ closeOverlay(adminDetailOverlay); return; }
+    if(adminPanelOverlay.classList.contains('open')){
+      closeOverlay(adminPanelOverlay);
+      if(adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
+      return;
+    }
+    if(adminLoginOverlay.classList.contains('open')){ closeOverlay(adminLoginOverlay); }
+  });
+
+  function attemptAdminLogin(){
+    var value = adminPasswordInput.value;
+    if(value !== ADMIN_PASSWORD){
+      adminLoginError.textContent = 'رمز عبور اشتباه است.';
+      adminLoginError.style.display = 'block';
+      return;
+    }
+    closeOverlay(adminLoginOverlay);
+    openOverlay(adminPanelOverlay);
+    loadAdminOrders();
+  }
+  document.getElementById('adminLoginSubmitBtn').addEventListener('click', attemptAdminLogin);
+  adminPasswordInput.addEventListener('keydown', function (e) {
+    if(e.key === 'Enter'){ e.preventDefault(); attemptAdminLogin(); }
+  });
+
+  function formatAdminDate(ts){
+    if(!ts || typeof ts.toDate !== 'function') return '—';
+    try{
+      return ts.toDate().toLocaleString('fa-IR');
+    }catch(e){
+      return '—';
+    }
+  }
+
+  function renderAdminOrdersList(){
+    var ids = Object.keys(adminOrdersCache);
+    if(!ids.length){
+      adminOrdersList.innerHTML = '<div class="admin-orders-empty">هنوز سفارشی ثبت نشده است.</div>';
+      return;
+    }
+    ids.sort(function (a, b) {
+      var ta = adminOrdersCache[a].createdAt && adminOrdersCache[a].createdAt.toMillis ? adminOrdersCache[a].createdAt.toMillis() : 0;
+      var tb = adminOrdersCache[b].createdAt && adminOrdersCache[b].createdAt.toMillis ? adminOrdersCache[b].createdAt.toMillis() : 0;
+      return tb - ta;
+    });
+    var html = '';
+    ids.forEach(function (id) {
+      var o = adminOrdersCache[id];
+      html += '<div class="admin-order-row" data-order-id="' + id + '">' +
+        '<div class="aor-top"><span class="aor-name">' + escapeHtml(o.name || 'بدون نام') + '</span>' +
+        '<span class="aor-status">' + escapeHtml(o.status || 'جدید') + '</span></div>' +
+        '<div class="aor-meta"><span>' + escapeHtml(o.productType || '') + ' · ' + escapeHtml(o.phone || '') + '</span>' +
+        '<span>' + formatAdminDate(o.createdAt) + '</span></div>' +
+        '</div>';
+    });
+    adminOrdersList.innerHTML = html;
+    adminOrdersList.querySelectorAll('.admin-order-row').forEach(function (row) {
+      row.addEventListener('click', function () { showAdminOrderDetail(row.dataset.orderId); });
+    });
+  }
+
+  function loadAdminOrders(){
+    adminOrdersList.innerHTML = '<div class="admin-orders-empty">در حال بارگذاری سفارش‌ها…</div>';
+    if(adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
+    ensureAuth().then(function () {
+      adminOrdersUnsub = db.collection('orders').onSnapshot(function (snapshot) {
+        adminOrdersCache = {};
+        snapshot.forEach(function (doc) { adminOrdersCache[doc.id] = doc.data(); });
+        renderAdminOrdersList();
+      }, function (err) {
+        console.error('[MorsAra] خطای دریافت سفارش‌ها:', err);
+        adminOrdersList.innerHTML = '<div class="admin-orders-empty">دریافت سفارش‌ها ممکن نشد. لطفاً دوباره تلاش کنید.</div>';
+      });
+    });
+  }
+
+  function adminDetailLine(label, value, wrap){
+    return '<div class="admin-detail-line' + (wrap ? ' wrap' : '') + '"><span>' + escapeHtml(label) + '</span><b>' + escapeHtml(value) + '</b></div>';
+  }
+
+  function showAdminOrderDetail(id){
+    var o = adminOrdersCache[id];
+    if(!o) return;
+    var html = '';
+    html += adminDetailLine('نام / متن سفارش', o.name || '—');
+    html += adminDetailLine('شماره تماس', o.phone || '—');
+    html += adminDetailLine('نوع محصول', o.productType || '—');
+    html += adminDetailLine('کد مورس', o.morseCode || '—', true);
+    html += adminDetailLine('تعداد خط (−)', String(o.dashCount != null ? o.dashCount : 0));
+    html += adminDetailLine('تعداد نقطه (·)', String(o.dotCount != null ? o.dotCount : 0));
+    html += adminDetailLine('تعداد مهره قلبی', String(o.heartCount != null ? o.heartCount : 0));
+    html += adminDetailLine('رنگ‌ها', (o.colors && o.colors.length) ? o.colors.join('، ') : '—');
+    html += adminDetailLine('نوع بند', o.cordType || '—');
+    html += adminDetailLine('قیمت پایه', fmt(o.basePrice || 0));
+    html += adminDetailLine('قیمت نهایی', fmt(o.totalPrice || 0));
+    html += adminDetailLine('وضعیت', o.status || 'جدید');
+    html += adminDetailLine('تاریخ ثبت', formatAdminDate(o.createdAt));
+    if(o.notes) html += adminDetailLine('توضیحات', o.notes, true);
+    adminOrderDetail.innerHTML = html;
+    openOverlay(adminDetailOverlay);
+  }
 
 });
 </script>
