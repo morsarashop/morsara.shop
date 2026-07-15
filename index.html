@@ -857,7 +857,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function errorMessageFor(err){
     var code = err && err.code;
     if(code === 'timeout'){
-      return 'ارتباط با سرور خیلی طول کشید و پاسخی نیامد. لطفاً اینترنت خود را بررسی کنید و دوباره تلاش کنید؛ اگر باز هم طول کشید، ممکن است تنظیمات دیتابیس نیاز به بررسی داشته باشد.';
+      return 'مشکلی پیش آمد. لطفاً از وصل بودن اینترنت و VPN خود مطمئن شوید.';
     }
     if(code === 'permission-denied'){
       return 'اطلاعات سفارش معتبر نیست. لطفاً مقادیر فرم را بررسی و دوباره تلاش کنید.';
@@ -994,7 +994,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    withTimeout(orderPromise, 15000).then(function () {
+    withTimeout(orderPromise, 5000).then(function () {
       document.getElementById('orderFormView').style.display = 'none';
       document.getElementById('orderSuccessView').style.display = 'block';
       var waLink = document.getElementById('whatsappLink');
@@ -1003,7 +1003,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }).catch(function (err) {
       console.error('[MorsAra] خطای ثبت سفارش:', err);
       var technical = '';
-      if(err){
+      if(err && err.code !== 'timeout'){
         if(err.code) technical += ' [کد: ' + err.code + ']';
         if(err.message) technical += ' — ' + err.message;
       }
