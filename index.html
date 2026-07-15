@@ -341,7 +341,7 @@
     <nav class="tabs" role="tablist" aria-label="بخش‌های سایت">
       <button type="button" data-view="home" class="active" role="tab" aria-selected="true">صفحه اول</button>
       <button type="button" data-view="designer" role="tab" aria-selected="false">طراحی محصول</button>
-      <button type="button" data-view="pricelist" role="tab" aria-selected="false">لیست قیمت</button>
+      <button type="button" data-view="pricelist" role="tab" aria-selected="false">محاسبه قیمت</button>
       <button type="button" data-view="steps" role="tab" aria-selected="false">مراحل خرید</button>
       <button type="button" data-view="about" role="tab" aria-selected="false">درباره ما</button>
     </nav>
@@ -353,35 +353,6 @@
       <span class="eyebrow">دستبند و گردنبند دست‌ساز مورس</span>
       <h1 class="hero-title">اسم تو، به یک <b>رمز خاص</b><br>روی دستت تبدیل می‌شود</h1>
       <p class="lead">هر دستبند از روی کد مورسِ اسم یا متن تو ساخته می‌شود؛ نقطه و خط کنار هم، معنایی که فقط خودت می‌دانی.</p>
-    </div>
-
-    <div class="hero-visual" aria-hidden="true">
-      <svg viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="نمایش گرافیکی دستبند کد مورس">
-        <defs>
-          <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#f4dd93"/>
-            <stop offset="100%" stop-color="#b6893f"/>
-          </linearGradient>
-        </defs>
-        <ellipse cx="260" cy="150" rx="170" ry="60" fill="none" stroke="#3a3a3f" stroke-width="10"/>
-        <ellipse cx="260" cy="150" rx="170" ry="60" fill="none" stroke="url(#goldGrad)" stroke-width="3" stroke-dasharray="4 10"/>
-        <g fill="url(#goldGrad)">
-          <circle cx="120" cy="150" r="9"/>
-          <rect x="148" y="143" width="26" height="14" rx="7"/>
-          <circle cx="196" cy="150" r="9"/>
-          <circle cx="222" cy="150" r="9"/>
-          <rect x="248" y="143" width="26" height="14" rx="7"/>
-          <circle cx="300" cy="150" r="9"/>
-          <rect x="326" y="143" width="26" height="14" rx="7"/>
-          <rect x="366" y="143" width="26" height="14" rx="7"/>
-          <circle cx="410" cy="150" r="9"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="hero-cta-row">
-      <button type="button" class="btn btn-lg" id="heroDesignBtn">ساخت دستبند من</button>
-      <button type="button" class="btn ghost btn-lg" id="heroPriceBtn">دیدن قیمت‌ها</button>
     </div>
 
     <div class="panel reveal">
@@ -541,26 +512,6 @@
   <!-- PRICE LIST -->
   <section class="view" id="view-pricelist">
     <div class="panel">
-      <h2 class="panel-title">لیست قیمت</h2>
-      <table class="pricelist">
-        <thead><tr><th>مورد</th><th>توضیح</th><th>قیمت</th></tr></thead>
-        <tbody>
-          <tr><td>قیمت پایه دستبند</td><td>هزینه ثابت ساخت و مواد اولیه</td><td class="price">۲۰٬۰۰۰ تومان</td></tr>
-          <tr><td>مهره خط (−)</td><td>به ازای هر خط در کد مورس متن</td><td class="price">۱۰٬۰۰۰ تومان</td></tr>
-          <tr><td>مهره نقطه (·)</td><td>به ازای هر نقطه در کد مورس متن</td><td class="price">۱۰٬۰۰۰ تومان</td></tr>
-          <tr><td>مهره قلبی</td><td>به ازای هر مهره قلبی (تعداد دلخواه)</td><td class="price">+ ۱۵٬۰۰۰ تومان</td></tr>
-          <tr><td>رنگ نقره‌ای</td><td>می‌توان با رنگ‌های دیگر ترکیب کرد</td><td class="free">رایگان</td></tr>
-          <tr><td>رنگ مشکی</td><td>می‌توان با رنگ‌های دیگر ترکیب کرد</td><td class="price">+ ۵٬۰۰۰ تومان</td></tr>
-          <tr><td>رنگ طلایی</td><td>می‌توان با رنگ‌های دیگر ترکیب کرد</td><td class="price">+ ۱۰٬۰۰۰ تومان</td></tr>
-          <tr><td>بند کشی</td><td>پیش‌فرض</td><td class="free">رایگان</td></tr>
-          <tr><td>نخ دندلیون اورجینال سفید</td><td>—</td><td class="price">+ ۱۰٬۰۰۰ تومان</td></tr>
-          <tr><td>نخ دندلیون اورجینال مشکی</td><td>—</td><td class="price">+ ۱۰٬۰۰۰ تومان</td></tr>
-          <tr><td>تبدیل به گردنبند</td><td>به‌جای دستبند</td><td class="price">+ ۵۰٬۰۰۰ تومان</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="panel">
       <h2 class="panel-title">نحوه محاسبه قیمت</h2>
       <div class="steps">
         <div class="step"><div class="step-num">۱</div><div class="step-body"><h4>نام یا متن موردنظر را وارد کنید</h4></div></div>
@@ -692,7 +643,7 @@ function analyzeMorseText(text){
 }
 
 /* ثابت‌های قیمت‌گذاری */
-var BASE_PRICE = 20000;
+var BASE_PRICE = 70000; // ۲۰٬۰۰۰ اولیه + ۵۰٬۰۰۰ اضافه‌شده طبق درخواست
 var DASH_PRICE = 10000;
 var DOT_PRICE = 10000;
 var HEART_PRICE = 15000;
@@ -766,11 +717,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('nav.tabs button').forEach(function (b) {
     b.addEventListener('click', function () { goTo(b.dataset.view); });
   });
-
-  var heroDesignBtn = document.getElementById('heroDesignBtn');
-  if(heroDesignBtn) heroDesignBtn.addEventListener('click', function () { goTo('designer'); });
-  var heroPriceBtn = document.getElementById('heroPriceBtn');
-  if(heroPriceBtn) heroPriceBtn.addEventListener('click', function () { goTo('pricelist'); });
 
   /* ---- انیمیشن ملایم ورود بخش‌ها هنگام اسکرول ---- */
   if('IntersectionObserver' in window){
