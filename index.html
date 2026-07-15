@@ -856,6 +856,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function errorMessageFor(err){
     var code = err && err.code;
+    if(code === 'timeout'){
+      return 'ارتباط با سرور خیلی طول کشید و پاسخی نیامد. لطفاً اینترنت خود را بررسی کنید و دوباره تلاش کنید؛ اگر باز هم طول کشید، ممکن است تنظیمات دیتابیس نیاز به بررسی داشته باشد.';
+    }
     if(code === 'permission-denied'){
       return 'اطلاعات سفارش معتبر نیست. لطفاً مقادیر فرم را بررسی و دوباره تلاش کنید.';
     }
@@ -863,6 +866,32 @@ document.addEventListener('DOMContentLoaded', function () {
       return 'اتصال به سرور برقرار نشد. لطفاً اینترنت خود را بررسی و دوباره تلاش کنید.';
     }
     return 'مشکلی در ثبت سفارش پیش آمد. لطفاً دوباره تلاش کنید یا در واتساپ پیام دهید.';
+  }
+
+  /* اگر عملیات بیش از حد طول بکشد (مثلاً به‌خاطر قوانین نادرست Firestore یا قطعی شبکه)،
+     به‌جای معلق ماندن دکمه برای همیشه، بعد از مدتی خطای مشخص نمایش داده می‌شود. */
+  function withTimeout(promise, ms){
+    return new Promise(function (resolve, reject) {
+      var settled = false;
+      var timer = setTimeout(function () {
+        if(settled) return;
+        settled = true;
+        var err = new Error('پاسخی از سرور دریافت نشد.');
+        err.code = 'timeout';
+        reject(err);
+      }, ms);
+      promise.then(function (value) {
+        if(settled) return;
+        settled = true;
+        clearTimeout(timer);
+        resolve(value);
+      }, function (err) {
+        if(settled) return;
+        settled = true;
+        clearTimeout(timer);
+        reject(err);
+      });
+    });
   }
 
   /* ---- ساخت پیام آماده‌ی واتساپ با جزئیات کامل سفارش ---- */
@@ -940,7 +969,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var originalLabel = btn.textContent;
     btn.textContent = 'در حال ثبت سفارش…';
 
-    ensureAuth().then(function (user) {
+    var orderPromise = ensureAuth().then(function (user) {
       if(!user){
         var err = new Error('auth-failed');
         err.code = 'auth-failed';
@@ -963,7 +992,9 @@ document.addEventListener('DOMContentLoaded', function () {
         status: 'جدید',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
-    }).then(function () {
+    });
+
+    withTimeout(orderPromise, 15000).then(function () {
       document.getElementById('orderFormView').style.display = 'none';
       document.getElementById('orderSuccessView').style.display = 'block';
       var waLink = document.getElementById('whatsappLink');
