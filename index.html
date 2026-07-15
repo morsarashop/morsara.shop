@@ -328,6 +328,14 @@
   .admin-detail-line b{ color:var(--text); font-weight:600; text-align:left; direction:ltr; }
   .admin-detail-line.wrap{ flex-direction:column; gap:6px; }
   .admin-detail-line.wrap b{ text-align:right; direction:rtl; }
+
+  .admin-delete-btn{
+    width:100%; margin-top:20px; padding:12px 20px; border-radius:8px; border:1.5px solid var(--maroon);
+    background:none; color:var(--maroon); font-family:'Vazirmatn'; font-weight:700; font-size:.86rem; cursor:pointer; transition:.2s;
+  }
+  .admin-delete-btn:hover{ background:var(--maroon); color:#fff; }
+  .admin-delete-btn:disabled{ opacity:.6; cursor:not-allowed; }
+  .admin-delete-error{ color:var(--maroon); font-size:.78rem; text-align:center; margin-top:10px; }
 </style>
 </head>
 <body>
@@ -1211,8 +1219,37 @@ document.addEventListener('DOMContentLoaded', function () {
     html += adminDetailLine('وضعیت', o.status || 'جدید');
     html += adminDetailLine('تاریخ ثبت', formatAdminDate(o.createdAt));
     if(o.notes) html += adminDetailLine('توضیحات', o.notes, true);
+    html += '<button type="button" class="admin-delete-btn" id="adminDeleteOrderBtn">حذف این سفارش</button>';
+    html += '<div class="admin-delete-error" id="adminDeleteError" style="display:none;"></div>';
     adminOrderDetail.innerHTML = html;
     openOverlay(adminDetailOverlay);
+
+    document.getElementById('adminDeleteOrderBtn').addEventListener('click', function () {
+      deleteAdminOrder(id, this);
+    });
+  }
+
+  function deleteAdminOrder(id, btn){
+    var confirmed = window.confirm('آیا مطمئن هستید که می‌خواهید این سفارش را برای همیشه حذف کنید؟ این کار قابل بازگشت نیست.');
+    if(!confirmed) return;
+
+    var errBox = document.getElementById('adminDeleteError');
+    btn.disabled = true;
+    var originalLabel = btn.textContent;
+    btn.textContent = 'در حال حذف…';
+
+    db.collection('orders').doc(id).delete().then(function () {
+      closeOverlay(adminDetailOverlay);
+    }).catch(function (err) {
+      console.error('[MorsAra] خطای حذف سفارش:', err);
+      btn.disabled = false;
+      btn.textContent = originalLabel;
+      if(errBox){
+        var technical = (err && err.code) ? ' [کد: ' + err.code + ']' : '';
+        errBox.textContent = 'حذف سفارش ممکن نشد.' + technical + ' لطفاً دوباره تلاش کنید.';
+        errBox.style.display = 'block';
+      }
+    });
   }
 });
 })();
