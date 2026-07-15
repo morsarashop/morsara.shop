@@ -500,8 +500,8 @@
           <div id="orderSuccessView" class="order-success" style="display:none;" role="status">
             <div class="ok-badge" aria-hidden="true">✓</div>
             <h3>سفارش شما ثبت شد</h3>
-            <p class="success-msg">سفارش شما با موفقیت ثبت شد.</p>
-            <p class="success-msg">برای دریافت اطلاعات پرداخت و ارسال رسید، در واتساپ پیام دهید.</p>
+            <p class="success-msg">شما می‌توانید با پیام دادن یا زنگ زدن به این شماره از محصول خود اطلاعات دریافت کنید و تغییرات را اعمال کنید:</p>
+            <p class="success-msg" style="font-size:1.2rem; font-weight:700; color:var(--gold); direction:ltr;">09967787665</p>
             <a class="btn whatsapp-btn" id="whatsappLink" href="https://wa.me/989967787665" target="_blank" rel="noopener noreferrer">پیام در واتساپ با جزئیات سفارش</a>
           </div>
         </div>
@@ -559,7 +559,6 @@
     <div class="admin-modal-box">
       <button type="button" class="admin-modal-close" id="adminLoginCloseBtn" aria-label="بستن">✕</button>
       <h3>ورود به پنل ادمین</h3>
-      <input type="email" id="adminEmailInput" class="admin-login-field" placeholder="ایمیل ادمین" autocomplete="off">
       <input type="password" id="adminPasswordInput" class="admin-login-field" placeholder="رمز عبور" autocomplete="off">
       <div class="admin-login-error" id="adminLoginError"></div>
       <button type="button" class="btn" style="width:100%; justify-content:center;" id="adminLoginSubmitBtn">ورود</button>
@@ -570,7 +569,7 @@
   <div class="admin-modal-overlay" id="adminPanelOverlay" role="dialog" aria-modal="true" aria-label="پنل ادمین">
     <div class="admin-modal-box wide">
       <button type="button" class="admin-modal-close" id="adminPanelCloseBtn" aria-label="بستن">✕</button>
-      <h3>سفارش‌ها <button type="button" class="admin-logout-btn" id="adminLogoutBtn">خروج</button></h3>
+      <h3>سفارش‌ها</h3>
       <div id="adminOrdersList"><div class="admin-orders-empty">در حال بارگذاری سفارش‌ها…</div></div>
     </div>
   </div>
@@ -1021,6 +1020,7 @@ document.addEventListener('DOMContentLoaded', function () {
      نکته: خود سفارش‌ها همیشه در Firestore ذخیره می‌مانند؛ این بخش فقط یک
      نمای مدیریتی روی همان داده‌هاست.
      ========================================================================== */
+  var ADMIN_PASSWORD = 'Arad13892121';
   var adminOrdersUnsub = null;
   var adminOrdersCache = {};
 
@@ -1028,7 +1028,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var adminLoginOverlay = document.getElementById('adminLoginOverlay');
   var adminPanelOverlay = document.getElementById('adminPanelOverlay');
   var adminDetailOverlay = document.getElementById('adminDetailOverlay');
-  var adminEmailInput = document.getElementById('adminEmailInput');
   var adminPasswordInput = document.getElementById('adminPasswordInput');
   var adminLoginError = document.getElementById('adminLoginError');
   var adminOrdersList = document.getElementById('adminOrdersList');
@@ -1042,35 +1041,24 @@ document.addEventListener('DOMContentLoaded', function () {
     if(adminOrdersUnsub){ adminOrdersUnsub(); adminOrdersUnsub = null; }
   }
 
-  /* خروج از حساب ادمین و بازگشت خودکار به حالت ناشناس (برای مشتری‌های بعدی سایت) */
-  function adminSignOut(){
-    stopAdminOrdersListener();
-    auth.signOut().catch(function (err) { console.error('[MorsAra] خطای خروج:', err); });
-  }
-
   adminTriggerBtn.addEventListener('click', function () {
-    adminEmailInput.value = '';
     adminPasswordInput.value = '';
     adminLoginError.style.display = 'none';
     openOverlay(adminLoginOverlay);
-    setTimeout(function () { adminEmailInput.focus(); }, 50);
+    setTimeout(function () { adminPasswordInput.focus(); }, 50);
   });
 
   document.getElementById('adminLoginCloseBtn').addEventListener('click', function () { closeOverlay(adminLoginOverlay); });
   document.getElementById('adminPanelCloseBtn').addEventListener('click', function () {
     closeOverlay(adminPanelOverlay);
-    adminSignOut();
-  });
-  document.getElementById('adminLogoutBtn').addEventListener('click', function () {
-    closeOverlay(adminPanelOverlay);
-    adminSignOut();
+    stopAdminOrdersListener();
   });
   document.getElementById('adminDetailCloseBtn').addEventListener('click', function () { closeOverlay(adminDetailOverlay); });
 
   [adminLoginOverlay, adminPanelOverlay, adminDetailOverlay].forEach(function (overlay) {
     overlay.addEventListener('click', function (e) {
       if(e.target === overlay){
-        if(overlay === adminPanelOverlay) adminSignOut();
+        if(overlay === adminPanelOverlay) stopAdminOrdersListener();
         closeOverlay(overlay);
       }
     });
@@ -1081,50 +1069,28 @@ document.addEventListener('DOMContentLoaded', function () {
     if(adminDetailOverlay.classList.contains('open')){ closeOverlay(adminDetailOverlay); return; }
     if(adminPanelOverlay.classList.contains('open')){
       closeOverlay(adminPanelOverlay);
-      adminSignOut();
+      stopAdminOrdersListener();
       return;
     }
     if(adminLoginOverlay.classList.contains('open')){ closeOverlay(adminLoginOverlay); }
   });
 
   function attemptAdminLogin(){
-    var email = adminEmailInput.value.trim();
     var password = adminPasswordInput.value;
     adminLoginError.style.display = 'none';
 
-    if(!email || !password){
-      adminLoginError.textContent = 'لطفاً ایمیل و رمز عبور را وارد کنید.';
+    if(password !== ADMIN_PASSWORD){
+      adminLoginError.textContent = 'رمز عبور اشتباه است.';
       adminLoginError.style.display = 'block';
       return;
     }
 
-    adminLoginSubmitBtn.disabled = true;
-    var originalLabel = adminLoginSubmitBtn.textContent;
-    adminLoginSubmitBtn.textContent = 'در حال ورود…';
-
-    auth.signInWithEmailAndPassword(email, password).then(function () {
-      adminLoginSubmitBtn.disabled = false;
-      adminLoginSubmitBtn.textContent = originalLabel;
-      closeOverlay(adminLoginOverlay);
-      openOverlay(adminPanelOverlay);
-      loadAdminOrders();
-    }).catch(function (err) {
-      adminLoginSubmitBtn.disabled = false;
-      adminLoginSubmitBtn.textContent = originalLabel;
-      console.error('[MorsAra] خطای ورود ادمین:', err);
-      var msg = 'ایمیل یا رمز عبور اشتباه است.';
-      if(err && (err.code === 'auth/network-request-failed')){
-        msg = 'اتصال اینترنت برقرار نشد. لطفاً دوباره تلاش کنید.';
-      }
-      adminLoginError.textContent = msg;
-      adminLoginError.style.display = 'block';
-    });
+    closeOverlay(adminLoginOverlay);
+    openOverlay(adminPanelOverlay);
+    loadAdminOrders();
   }
   adminLoginSubmitBtn.addEventListener('click', attemptAdminLogin);
   adminPasswordInput.addEventListener('keydown', function (e) {
-    if(e.key === 'Enter'){ e.preventDefault(); attemptAdminLogin(); }
-  });
-  adminEmailInput.addEventListener('keydown', function (e) {
     if(e.key === 'Enter'){ e.preventDefault(); attemptAdminLogin(); }
   });
 
@@ -1167,13 +1133,18 @@ document.addEventListener('DOMContentLoaded', function () {
   function loadAdminOrders(){
     adminOrdersList.innerHTML = '<div class="admin-orders-empty">در حال بارگذاری سفارش‌ها…</div>';
     stopAdminOrdersListener();
-    adminOrdersUnsub = db.collection('orders').onSnapshot(function (snapshot) {
-      adminOrdersCache = {};
-      snapshot.forEach(function (doc) { adminOrdersCache[doc.id] = doc.data(); });
-      renderAdminOrdersList();
-    }, function (err) {
-      console.error('[MorsAra] خطای دریافت سفارش‌ها:', err);
-      adminOrdersList.innerHTML = '<div class="admin-orders-empty">دریافت سفارش‌ها ممکن نشد. لطفاً دوباره تلاش کنید.</div>';
+    var authReady = (typeof window.ensureAuth === 'function')
+      ? window.ensureAuth()
+      : (typeof auth !== 'undefined' ? auth.signInAnonymously() : Promise.resolve(null));
+    authReady.then(function () {
+      adminOrdersUnsub = db.collection('orders').onSnapshot(function (snapshot) {
+        adminOrdersCache = {};
+        snapshot.forEach(function (doc) { adminOrdersCache[doc.id] = doc.data(); });
+        renderAdminOrdersList();
+      }, function (err) {
+        console.error('[MorsAra] خطای دریافت سفارش‌ها:', err);
+        adminOrdersList.innerHTML = '<div class="admin-orders-empty">دریافت سفارش‌ها ممکن نشد. لطفاً دوباره تلاش کنید.</div>';
+      });
     });
   }
 
