@@ -1002,7 +1002,12 @@ document.addEventListener('DOMContentLoaded', function () {
       sendTelegramNotification(s);
     }).catch(function (err) {
       console.error('[MorsAra] خطای ثبت سفارش:', err);
-      errorBox.textContent = errorMessageFor(err);
+      var technical = '';
+      if(err){
+        if(err.code) technical += ' [کد: ' + err.code + ']';
+        if(err.message) technical += ' — ' + err.message;
+      }
+      errorBox.textContent = errorMessageFor(err) + technical;
       errorBox.style.display = 'block';
       isSubmitting = false;
       btn.disabled = false;
@@ -1174,7 +1179,12 @@ document.addEventListener('DOMContentLoaded', function () {
         renderAdminOrdersList();
       }, function (err) {
         console.error('[MorsAra] خطای دریافت سفارش‌ها:', err);
-        adminOrdersList.innerHTML = '<div class="admin-orders-empty">دریافت سفارش‌ها ممکن نشد. لطفاً دوباره تلاش کنید.</div>';
+        var technical = '';
+        if(err){
+          if(err.code) technical += ' [کد: ' + err.code + ']';
+          if(err.message) technical += ' — ' + err.message;
+        }
+        adminOrdersList.innerHTML = '<div class="admin-orders-empty">دریافت سفارش‌ها ممکن نشد.' + escapeHtml(technical) + '</div>';
       });
     });
   }
